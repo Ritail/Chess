@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Chess;
+using Script;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+namespace Chess
+{
+    public class GameManager : MonoBehaviourSingleton<PieceHandler>
 {
     [SerializeField] private Pièce BlackPawn;
     [SerializeField] private Pièce WhitePawn;
@@ -23,11 +28,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _piecePrefafTransparent;
     [SerializeField] private Transform _girdParent;
 
+    public Pièce[,] Pieces;
 
     
-    private void Start()
+    public void Start()
      {
-         Pièce[,] pièce =
+         Pieces = new Pièce[,]
         {
              { BlackRook, BlackKnight, BlackBishop, BlackKing, BlackQueen, BlackBishop, BlackKnight, BlackRook},
              { BlackPawn,  BlackPawn, BlackPawn, BlackPawn,BlackPawn, BlackPawn,BlackPawn, BlackPawn},
@@ -39,22 +45,38 @@ public class GameManager : MonoBehaviour
              { WhiteRook, WhiteKnight, WhiteBishop, WhiteKing, WhiteQueen, WhiteBishop, WhiteKnight, WhiteRook}
              
          };
-
-         for (int i = 0; i < pièce.GetLength(0); i++)
-         {
-             for (int j = 0; j < pièce.GetLength(1); j++)
-             {
-                 if (pièce[i, j] != null)
-                 {
-                     GameObject newPièce = Instantiate(_piecePrefaf, _girdParent);
-                     Image imgComponent = newPièce.GetComponent<Image>();
-                     imgComponent.sprite = pièce[i, j].sprite;
-                 }
-                 else
-                 {
-                     GameObject newvoid = Instantiate(_piecePrefafTransparent, _girdParent);
-                 }
-             } 
-         }
+         MatrixDes();
+         
      }
+
+    public void Matix()
+    {
+        for (int i = 0; i < Pieces.GetLength(0); i++)
+        {
+        for (int j = 0; j < Pieces.GetLength(1); j++)
+        { 
+            if (Pieces[i, j] != null) 
+            {
+                 GameObject newPièce = Instantiate(_piecePrefaf, _girdParent);
+                 newPièce.GetComponent<PieceHandler>().Body(Pieces[i, j], new Vector2Int(i, j));
+            }
+            else
+            {
+                GameObject newvoid = Instantiate(_piecePrefafTransparent, _girdParent);
+            }
+        } 
+        }
+    }
+
+    public void MatrixDes()
+    {
+        foreach (Transform child in _girdParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
 }
+}
+
+

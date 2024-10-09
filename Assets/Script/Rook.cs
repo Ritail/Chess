@@ -5,7 +5,7 @@
      [CreateAssetMenu(fileName = "Rook", menuName = "Piece/Rook")]
      public class Rook : Pièce
     {
-        public override Vector2Int availableMouvments()
+        public override Vector2Int[] availableMouvments()
         {
             throw new System.NotImplementedException();
         }
