@@ -6,9 +6,12 @@
      [CreateAssetMenu(fileName = "Pawn", menuName = "Piece/Pawn")]
      public class Pawn : Pièce
      {
-         public override Vector2Int[] availableMouvments()
+         public override List<Vector2Int> availableMouvments(Vector2Int position)
          {
-             throw new System.NotImplementedException();
+             List<Vector2Int> mouvments = new List<Vector2Int>();
+             mouvments.Add(new Vector2Int(1,0) + position);
+             mouvments.Add(new Vector2Int(2,0) + position);
+             return mouvments;
          }
      }
 }

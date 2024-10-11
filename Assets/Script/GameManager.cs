@@ -1,15 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Chess;
 using Script;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Chess
 {
-    public class GameManager : MonoBehaviourSingleton<PieceHandler>
+    public class GameManager : MonoBehaviourSingleton<GameManager>
 {
     [SerializeField] private Pièce BlackPawn;
     [SerializeField] private Pièce WhitePawn;
@@ -29,6 +23,8 @@ namespace Chess
     [SerializeField] private Transform _girdParent;
 
     public Pièce[,] Pieces;
+    public GameObject[,] PiecesDisplay;
+    public GameObject PieceSelect;
 
     
     public void Start()
@@ -45,38 +41,42 @@ namespace Chess
              { WhiteRook, WhiteKnight, WhiteBishop, WhiteKing, WhiteQueen, WhiteBishop, WhiteKnight, WhiteRook}
              
          };
-         MatrixDes();
-         
+         Matrix();
      }
 
-    public void Matix()
+    public void Matrix()
     {
+        PiecesDisplay = new GameObject[Pieces.GetLength(0), Pieces.GetLength(1)];
+        
         for (int i = 0; i < Pieces.GetLength(0); i++)
         {
-        for (int j = 0; j < Pieces.GetLength(1); j++)
-        { 
-            if (Pieces[i, j] != null) 
+            for (int j = 0; j < Pieces.GetLength(1); j++)
             {
-                 GameObject newPièce = Instantiate(_piecePrefaf, _girdParent);
-                 newPièce.GetComponent<PieceHandler>().Body(Pieces[i, j], new Vector2Int(i, j));
-            }
-            else
-            {
-                GameObject newvoid = Instantiate(_piecePrefafTransparent, _girdParent);
-            }
-        } 
+                GameObject newPièce;
+                if (Pieces[i, j] != null) 
+                {
+                     newPièce = Instantiate(_piecePrefaf, _girdParent);
+                     newPièce.GetComponent<PieceHandler>().Body(Pieces[i, j], new Vector2Int(i, j));
+                }
+                else
+                {
+                    newPièce = Instantiate(_piecePrefafTransparent, _girdParent);
+                }
+
+                PiecesDisplay[i, j] = newPièce;
+            } 
         }
     }
 
-    public void MatrixDes()
+    public void DestroyMatrix()
     {
         foreach (Transform child in _girdParent.transform)
         {
             Destroy(child.gameObject);
         }
     }
-    
 }
 }
+
 
 

@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using Chess;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Unity.VisualScripting;
-using Script;
+
 
 
 namespace Chess
@@ -13,15 +14,15 @@ namespace Chess
         private Pièce _piece;
         private Image _image;
         private Vector2Int _position;
+
+        [SerializeField] private GameObject _indicateurMouvement;
+
         
-        public Pièce[,] Pieces;
-
-
 
         private void Awake()
         {
                 _image = GetComponent<Image>();
-                
+
         }
 
         public void Body(Pièce piece, Vector2Int position)
@@ -34,23 +35,16 @@ namespace Chess
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            GameObject clickPiece = gameObject;
+            GameManager.Instance.DestroyMatrix();
+            GameManager.Instance.Matrix();
+            
+            List<Vector2Int> positions = _piece.availableMouvments(_position);
 
-            // List<Vector2Int> positions = _piece.availableMouvments();
-            Vector2Int mouvement = Vector2Int.right;
-            Vector2Int NewPosition = _position + mouvement;
-
-            GameManager.Instance.Pieces[_position.x, _position.y] = null;
-            GameManager.Instance.Pieces[NewPosition.x, NewPosition.y] = _piece;
-            GameManager.Instance.Matix();
-
-
-             if (eventData.button == PointerEventData.InputButton.Left)   
-             {
-                 
-                 GameObject gameObjectClique = eventData.pointerPress; // Récupère directement le GameObject cliqué
-                 Debug.Log("GameObject cliqué : " + gameObjectClique.name);
-             }    
+            foreach (var move in positions) {
+                GameObject pieceGO = GameManager.Instance.PiecesDisplay[move.x, move.y];
+                pieceGO.GetComponent<Image>().color = Color.gray;
+            }
+            
         }
     }
 }
