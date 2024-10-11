@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Chess;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -40,12 +41,20 @@ namespace Chess
             
             List<Vector2Int> positions = _piece.availableMouvments(_position);
 
-            foreach (var move in positions) {
+            foreach (Vector2Int move in positions) {
+                
                 GameObject pieceGO = GameManager.Instance.PiecesDisplay[move.x, move.y];
                 pieceGO.GetComponent<Image>().color = Color.gray;
+                
+                
+                Debug.Log(move);
             }
-            
         }
+        
+
+       
+            
     }
+       
 }
 

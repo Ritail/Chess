@@ -1,4 +1,5 @@
 using Script;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Chess
@@ -24,7 +25,6 @@ namespace Chess
 
     public Pièce[,] Pieces;
     public GameObject[,] PiecesDisplay;
-    public GameObject PieceSelect;
 
     
     public void Start()
@@ -64,6 +64,7 @@ namespace Chess
                 }
 
                 PiecesDisplay[i, j] = newPièce;
+                newPièce.GetComponent<BoxCollider2D>();
             } 
         }
     }
