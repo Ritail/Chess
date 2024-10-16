@@ -8,10 +8,30 @@
      {
          public override List<Vector2Int> availableMouvments(Vector2Int position)
          {
-             List<Vector2Int> mouvments = new List<Vector2Int>();
-             mouvments.Add(new Vector2Int(1,0) + position);
-             mouvments.Add(new Vector2Int(2,0) + position);
-             return mouvments;
+             List<Vector2Int> mouvements = new List<Vector2Int>();
+             if (isWhite != true)
+             {
+                 if (position.x == 1)
+                 {
+                     mouvements.Add(new Vector2Int(1,0) + position);
+                     mouvements.Add(new Vector2Int(2,0) + position);
+                     return mouvements;
+                 }
+                 mouvements.Add(new Vector2Int(1,0) + position);
+                 return mouvements;
+             }
+             else
+             {
+                 if (position.x == 6)
+                 {
+                     mouvements.Add(new Vector2Int(-1,0) + position);
+                     mouvements.Add(new Vector2Int(-2,0) + position);
+                     return mouvements;
+                 }
+                 mouvements.Add(new Vector2Int(-1,0) + position);
+                 return mouvements;
+             }
          }
+         
      }
 }

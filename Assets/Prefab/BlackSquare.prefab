@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5767698608421060108}
   - component: {fileID: 525724047436167576}
   - component: {fileID: 1829775744627590490}
-  - component: {fileID: 8621920366700412657}
   - component: {fileID: -5890460694573428475}
+  - component: {fileID: 164138612463434578}
+  - component: {fileID: -7348290469787960270}
   m_Layer: 0
   m_Name: BlackSquare
   m_TagString: CaseDamier
@@ -46,7 +47,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7750482411862658970}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!114 &1829775744627590490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,19 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8621920366700412657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7750482411862658970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561793d41d136fa45bd9e4f78cebf618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameManager: {fileID: 0}
 --- !u!61 &-5890460694573428475
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -119,7 +107,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -135,3 +123,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &164138612463434578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750482411862658970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d395a1bd4083946b3f2c03e3f2c995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7348290469787960270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7750482411862658970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561793d41d136fa45bd9e4f78cebf618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _indicateurMouvement: {fileID: 0}

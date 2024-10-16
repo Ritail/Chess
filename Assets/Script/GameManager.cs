@@ -26,6 +26,8 @@ namespace Chess
     public Pièce[,] Pieces;
     public GameObject[,] PiecesDisplay;
 
+    public GameObject clickPiece;
+
     
     public void Start()
      {
@@ -41,10 +43,10 @@ namespace Chess
              { WhiteRook, WhiteKnight, WhiteBishop, WhiteKing, WhiteQueen, WhiteBishop, WhiteKnight, WhiteRook}
              
          };
-         Matrix();
+         DisplayMatrix();
      }
 
-    public void Matrix()
+    public void DisplayMatrix()
     {
         PiecesDisplay = new GameObject[Pieces.GetLength(0), Pieces.GetLength(1)];
         
@@ -56,11 +58,12 @@ namespace Chess
                 if (Pieces[i, j] != null) 
                 {
                      newPièce = Instantiate(_piecePrefaf, _girdParent);
-                     newPièce.GetComponent<PieceHandler>().Body(Pieces[i, j], new Vector2Int(i, j));
+                     newPièce.GetComponent<PieceHandler>().Body(Pieces[i,j], new Vector2Int(i, j));
                 }
                 else
                 {
                     newPièce = Instantiate(_piecePrefafTransparent, _girdParent);
+                    newPièce.GetComponent<AvailableMouvement>().PositionBody(new Vector2Int(i, j));
                 }
 
                 PiecesDisplay[i, j] = newPièce;
@@ -76,6 +79,8 @@ namespace Chess
             Destroy(child.gameObject);
         }
     }
+    
+
 }
 }
 
