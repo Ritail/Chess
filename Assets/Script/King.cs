@@ -21,7 +21,7 @@ namespace Chess
                     int x = position.x + directionsX[i];
                     int y = position.y + directionsY[i];
             
-                    while (x >= 0 && x <= 8 && y >= 0 && y <= 8)
+                    while (true)
                     {
                         Vector2Int newPosition = new Vector2Int(x, y);
                         mouvements.Add(newPosition);
@@ -40,7 +40,7 @@ namespace Chess
                     int x = position.x + directionsX[i];
                     int y = position.y + directionsY[i];
             
-                    while (!(x > 0 && x < 8 && y > 0 && y < 8))
+                    while (x > 0 && x < 8 && y > 0 && y < 8)
                     {
                         Vector2Int newPosition = new Vector2Int(x, y);
                         mouvements.Add(newPosition);
@@ -48,7 +48,6 @@ namespace Chess
                         mouvements.Add(new Vector2Int(-1,0) + position);
                         mouvements.Add(new Vector2Int(0,1) + position);
                         mouvements.Add(new Vector2Int(0,-1) + position);
-                        break;
                     }
                 }
             }

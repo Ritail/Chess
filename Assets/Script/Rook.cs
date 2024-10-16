@@ -10,36 +10,25 @@
          private Vector2Int _currentRight;
         public override List<Vector2Int> availableMouvments(Vector2Int position)
         {
+             
             List<Vector2Int> mouvements = new List<Vector2Int>();
+            int[] directionX = {1,-1,0,0};
+            int[] directionY = {0,0,1,-1};
 
-            for (int i = 0; i < 4; i++)
+            if (isWhite != true)
             {
-                int x = position.x;
-                int y = position.y;
-                
-                while (true)
+                for (int i = 0; i < 4; i++)
                 {
-                    x += position.x;
-                    
-                    if (x < 0 || x > 7 || y < 0 || y > 7)
+                    int x = position.x + directionX[i];
+                    int y = position.y + directionY[i];
+                    while (x >= 0 && x < 8 && y >= 0 && y < 8)
                     {
-                        break;
+                        Vector2Int newPosition = new Vector2Int(x, y);
+                        mouvements.Add(newPosition);
                     }
-
-                    Vector2Int newPosition = new Vector2Int(x, y);
                     
-                    if (GameManager.Instance.PiecesDisplay[x, y] != null)
-                    {
-                        if (GameManager.Instance.PiecesDisplay[x, y] && isWhite)
-                        {
-                            mouvements.Add(newPosition); 
-                        }
-                        break; 
-                    }
-                    mouvements.Add(newPosition);
                 }
             }
-
             return mouvements;
         }
         
