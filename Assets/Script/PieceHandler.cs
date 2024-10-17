@@ -48,14 +48,13 @@ namespace Chess
             
             if (_isAValidMovement)
             {
-                
                 _isAValidMovement = false;
             }
             else
             {
                 List<Vector2Int> positions = _piece.availableMouvments(_position);
-                foreach (Vector2Int possiblemove in positions) {
-                
+                foreach (Vector2Int possiblemove in positions) 
+                {
                     GameObject pieceGO = GameManager.Instance.PiecesDisplay[possiblemove.x, possiblemove.y];
                     PieceHandler possiblePieceHandler = pieceGO.GetComponent<PieceHandler>();
                     possiblePieceHandler.DefineAsPossibleMove(_position);
