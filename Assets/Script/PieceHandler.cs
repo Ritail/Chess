@@ -41,8 +41,6 @@ namespace Chess
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            // GameManager.Instance.DestroyMatrix();
-            // GameManager.Instance.DisplayMatrix();
 
             GameManager.Instance.clickPiece = gameObject;
             
@@ -63,7 +61,7 @@ namespace Chess
             
         }
 
-        private void DefineAsPossibleMove(Vector2Int position)
+        public void DefineAsPossibleMove(Vector2Int position)
         {
             GetComponent<Image>().color = Color.gray;
             _isAValidMovement = true;
