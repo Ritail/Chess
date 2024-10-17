@@ -33,24 +33,20 @@ namespace Chess
                         Pièce pieceAtNewPosition = GameManager.Instance.Pieces[newX, newY];
                         if (pieceAtNewPosition == null)
                         {
-                            // Si la case est vide, ajouter le mouvement
                             mouvements.Add(newPosition);
                         }
                         else
                         {
-                            // Si la case est occupée par une pièce de couleur différente, on peut la capturer
                             if (pieceAtNewPosition.isWhite != this.isWhite)
                             {
                                 mouvements.Add(newPosition);
+                                Destroy(pieceAtNewPosition);
                             }
-
-                            // Arrêter d'explorer dans cette direction
                             break;
                         }
                     }
                     else
                     {
-                        // Sortir de la boucle si la position n'est pas valide
                         break;
                     }
                 }
@@ -58,13 +54,6 @@ namespace Chess
 
             return mouvements;
         }
-
-        private bool IsValidPosition(Vector2Int pos)
-        {
-            // Vérifiez si la position est à l'intérieur des limites du plateau (8x8 pour un échiquier)
-            return pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
-        }
-
     } 
     
         

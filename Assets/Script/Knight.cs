@@ -51,11 +51,5 @@
 
              return mouvements;
          }
-
-         private bool IsValidPosition(Vector2Int pos)
-         {
-             // Vérifiez si la position est à l'intérieur des limites du plateau (8x8 pour un échiquier)
-             return pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
-         }
      }
  }

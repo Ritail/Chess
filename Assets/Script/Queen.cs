@@ -49,25 +49,17 @@
                         {
                             mouvements.Add(newPosition);
                         }
-
-                        // Arrêter d'explorer dans cette direction
                         break;
                     }
                 }
                 else
                 {
-                    // Sortir de la boucle si la position n'est pas valide
                     break;
                 }
             }
         }
 
         return mouvements;
-         }
-         private bool IsValidPosition(Vector2Int pos)
-         {
-             // Vérifiez si la position est à l'intérieur des limites du plateau (8x8 pour un échiquier)
-             return pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
          }
      }
  }

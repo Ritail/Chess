@@ -14,6 +14,7 @@ namespace Chess
         {
             _positiont = recuperationposition;
             return recuperationposition;
+            
         }
 
         public void OnPointerClick(PointerEventData eventData)

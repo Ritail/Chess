@@ -10,41 +10,50 @@ namespace Chess
         public override List<Vector2Int> availableMouvments(Vector2Int position)
         {
             List<Vector2Int> mouvements = new List<Vector2Int>();
-
-            // Directions possibles pour le roi (toutes les cases autour)
-            int[,] directions = new int[,]
+            Vector2Int[] kingMoves = new Vector2Int[]
             {
-                { 1, 0 },   // Droite
-                { -1, 0 },  // Gauche
-                { 0, 1 },   // Haut
-                { 0, -1 },  // Bas
-                { 1, 1 },   // Diagonale haut droite
-                { 1, -1 },  // Diagonale bas droite
-                { -1, 1 },  // Diagonale haut gauche
-                { -1, -1 }   // Diagonale bas gauche
+                new Vector2Int(1, 0),   // Droite
+                new Vector2Int(-1, 0),  // Gauche
+                new Vector2Int(0, 1),   // Haut
+                new Vector2Int(0, -1),  // Bas
+                new Vector2Int(1, 1),   // Diagonale Haut-Droite
+                new Vector2Int(1, -1),  // Diagonale Bas-Droite
+                new Vector2Int(-1, 1),  // Diagonale Haut-Gauche
+                new Vector2Int(-1, -1)  // Diagonale Bas-Gauche
             };
 
-            // Explorer chaque direction
-            for (int i = 0; i < directions.GetLength(0); i++)
+            // Explorer chaque mouvement possible
+            foreach (Vector2Int move in kingMoves)
             {
-                int newX = position.x + directions[i, 0];
-                int newY = position.y + directions[i, 1];
+                Vector2Int newPosition = position + move;
 
-                Vector2Int newPosition = new Vector2Int(newX, newY);
-                // Vérifiez si la nouvelle position est valide (dans les limites du plateau)
+                // Vérifiez si la nouvelle position est valide (sur le plateau)
                 if (IsValidPosition(newPosition))
                 {
-                    mouvements.Add(newPosition);
+                    // Récupérer la pièce à la nouvelle position dans la matrice du GameManager
+                    Pièce pieceAtNewPosition = GameManager.Instance.Pieces[newPosition.x, newPosition.y];
+
+                    if (pieceAtNewPosition == null)
+                    {
+                        // Si la case est vide, ajouter le mouvement
+                        mouvements.Add(newPosition);
+                    }
+                    else
+                    {
+                        // Si la case est occupée par une pièce de couleur différente, on peut la capturer
+                        if (pieceAtNewPosition.isWhite != this.isWhite)
+                        {
+                            mouvements.Add(newPosition);
+                        }
+                        // Si c'est une pièce de la même couleur, le roi ne peut pas y aller
+                    }
                 }
             }
+
 
             return mouvements;
         }
 
-        private bool IsValidPosition(Vector2Int pos)
-        {
-            // Vérifiez si la position est à l'intérieur des limites du plateau (8x8 pour un échiquier)
-            return pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
-        }
+        
     }
 }
