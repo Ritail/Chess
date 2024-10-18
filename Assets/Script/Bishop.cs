@@ -24,6 +24,8 @@ namespace Chess
             {
                 for (int step = 1; step < 8; step++) // On peut se déplacer jusqu'à 7 cases
                 {
+                  
+                        
                     int newX = position.x + directions[i, 0] * step;
                     int newY = position.y + directions[i, 1] * step;
 

@@ -20,8 +20,6 @@ namespace Chess
         public void OnPointerClick(PointerEventData eventData)
         {
             GameManager.Instance.clickPiece.GetComponent<PieceHandler>().Deplacer(_positiont);
-            GameManager.Instance.DestroyMatrix();
-            GameManager.Instance.DisplayMatrix();
         }
     }
 }

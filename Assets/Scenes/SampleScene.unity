@@ -2616,6 +2616,7 @@ MonoBehaviour:
   _piecePrefafTransparent: {fileID: 7750482411862658970, guid: b94913322fd3a3c469c09dca5a532a97, type: 3}
   _girdParent: {fileID: 2100254408}
   clickPiece: {fileID: 0}
+  _isWhiteTurn: 1
 --- !u!4 &1016554004
 Transform:
   m_ObjectHideFlags: 0

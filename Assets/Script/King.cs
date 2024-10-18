@@ -45,7 +45,6 @@ namespace Chess
                         {
                             mouvements.Add(newPosition);
                         }
-                        // Si c'est une pièce de la même couleur, le roi ne peut pas y aller
                     }
                 }
             }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Chess;
+using Unity.VisualScripting;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +20,7 @@ namespace Chess
         private Vector2Int _oldPosition;
         private Vector2Int _deplacer;
         private AvailableMouvement _availableMouvement;
-        private bool _isAValidMovement;
+        public bool _isAValidMovement;
 
         [SerializeField] private GameObject _indicateurMouvement;
 
@@ -47,15 +48,25 @@ namespace Chess
             if (_isAValidMovement)
             {
                 _isAValidMovement = false;
+                GameManager.Instance.EndTurn();
             }
             else
             {
+                if ((GameManager.Instance._isWhiteTurn && !_piece.isWhite) || (!GameManager.Instance._isWhiteTurn && _piece.isWhite))
+                {
+                    Debug.Log("Ce n'est pas le tour de cette pièce.");
+                    return; 
+                }
+                
                 List<Vector2Int> positions = _piece.availableMouvments(_position);
+                
                 foreach (Vector2Int possiblemove in positions) 
                 {
+                    
                     GameObject pieceGO = GameManager.Instance.PiecesDisplay[possiblemove.x, possiblemove.y];
                     PieceHandler possiblePieceHandler = pieceGO.GetComponent<PieceHandler>();
-                    possiblePieceHandler.DefineAsPossibleMove(_position);
+                    possiblePieceHandler.DefineAsPossibleMove(possiblemove);
+                    Debug.Log(possiblemove);
                 }
             }
             
@@ -63,9 +74,9 @@ namespace Chess
 
         public void DefineAsPossibleMove(Vector2Int position)
         {
-            GetComponent<Image>().color = Color.gray;
+            GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             _isAValidMovement = true;
-            _oldPosition = position;
+            _oldPosition = _position;
             Debug.Log("ancienne position : " + _oldPosition);
         }
 
@@ -73,7 +84,9 @@ namespace Chess
         {
             GameManager.Instance.Pieces[_position.x, _position.y] = null;
             GameManager.Instance.Pieces[position.x, position.y] = _piece;
+            _position = position;
             transform.localPosition = new Vector2(position.x, position.y);
+            Debug.Log("Pièce déplacée à : " + position);
         }
     }
        
