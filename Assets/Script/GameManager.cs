@@ -39,7 +39,7 @@ namespace Chess
                  {null, null, null, null,null, null,null, null,},
                  {null, null, null, null,null, null,null, null,},
                  {null, null, null, null,null, null,null, null,},
-                 {null, null, null, null,null, null,BlackKing, null,},
+                 {null, null, null, null,null, null,null, null,},
                  { WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn},
                  { WhiteRook, WhiteKnight, WhiteBishop, WhiteKing, WhiteQueen, WhiteBishop, WhiteKnight, WhiteRook}
                  
