@@ -27,7 +27,7 @@ namespace Chess
         public Pièce[,] Pieces;
         public GameObject[,] PiecesDisplay;
 
-        public GameObject clickPiece;
+        public Pièce clickPiece;
         public bool _isWhiteTurn = true;
 
     
@@ -40,7 +40,7 @@ namespace Chess
                  {null, null, null, null,null, null,null, null,},
                  {null, null, null, null,null, null,null, null,},
                  {null, null, null, null,null, null,null, null,},
-                 {null, null, null, null,null, null,null, null,},
+                 {null, null, null, null,null, null,BlackKing, null,},
                  { WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn},
                  { WhiteRook, WhiteKnight, WhiteBishop, WhiteKing, WhiteQueen, WhiteBishop, WhiteKnight, WhiteRook}
                  
@@ -65,7 +65,7 @@ namespace Chess
                     else
                     {
                         newPièce = Instantiate(_piecePrefafTransparent, _girdParent);
-                        newPièce.GetComponent<AvailableMouvement>().PositionBody(new Vector2Int(i, j));
+                        newPièce.GetComponent<PieceHandler>().PositionBody(new Vector2Int(i, j));
                     }
 
                     PiecesDisplay[i, j] = newPièce;

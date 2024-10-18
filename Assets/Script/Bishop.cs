@@ -42,7 +42,6 @@ namespace Chess
                             if (pieceAtNewPosition.isWhite != this.isWhite)
                             {
                                 mouvements.Add(newPosition);
-                                Destroy(pieceAtNewPosition);
                             }
                             break;
                         }

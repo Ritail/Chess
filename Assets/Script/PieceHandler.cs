@@ -19,7 +19,6 @@ namespace Chess
         private Vector2Int _position;
         private Vector2Int _oldPosition;
         private Vector2Int _deplacer;
-        private AvailableMouvement _availableMouvement;
         public bool _isAValidMovement;
 
         [SerializeField] private GameObject _indicateurMouvement;
@@ -29,7 +28,6 @@ namespace Chess
         private void Awake()
         {
                 _image = GetComponent<Image>();
-                _availableMouvement = GetComponent<AvailableMouvement>();
         }
 
         public void Body(Pièce piece, Vector2Int position)
@@ -42,13 +40,20 @@ namespace Chess
 
         public void OnPointerClick(PointerEventData eventData)
         {
-
-            GameManager.Instance.clickPiece = gameObject;
-            
+            GameManager.Instance.DestroyMatrix();
+            GameManager.Instance.DisplayMatrix();
             if (_isAValidMovement)
             {
                 _isAValidMovement = false;
+                Pièce movingPiece = GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y];
+                GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y] = null;
+                GameManager.Instance.Pieces[_position.x, _position.y] = movingPiece;
+                Debug.Log("position :" + _position);
                 GameManager.Instance.EndTurn();
+            }
+            if (_piece == null)
+            {
+                return;
             }
             else
             {
@@ -62,11 +67,10 @@ namespace Chess
                 
                 foreach (Vector2Int possiblemove in positions) 
                 {
-                    
                     GameObject pieceGO = GameManager.Instance.PiecesDisplay[possiblemove.x, possiblemove.y];
                     PieceHandler possiblePieceHandler = pieceGO.GetComponent<PieceHandler>();
-                    possiblePieceHandler.DefineAsPossibleMove(possiblemove);
-                    Debug.Log(possiblemove);
+                    possiblePieceHandler.DefineAsPossibleMove(_position);
+                    Debug.Log("moove possible" + possiblemove);
                 }
             }
             
@@ -76,17 +80,14 @@ namespace Chess
         {
             GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             _isAValidMovement = true;
-            _oldPosition = _position;
+            _oldPosition = position;
+            GameManager.Instance.clickPiece = _piece; 
             Debug.Log("ancienne position : " + _oldPosition);
         }
-
-        public void Deplacer(Vector2Int position)
+        
+        public void PositionBody(Vector2Int recuperationposition)
         {
-            GameManager.Instance.Pieces[_position.x, _position.y] = null;
-            GameManager.Instance.Pieces[position.x, position.y] = _piece;
-            _position = position;
-            transform.localPosition = new Vector2(position.x, position.y);
-            Debug.Log("Pièce déplacée à : " + position);
+            _position = recuperationposition;
         }
     }
        
