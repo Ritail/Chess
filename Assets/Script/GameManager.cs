@@ -74,9 +74,9 @@ namespace Chess
         }
         public void EndTurn()
         {
-            _isWhiteTurn = !_isWhiteTurn; // Alterner entre les blancs et les noirs
+            _isWhiteTurn = !_isWhiteTurn; 
             DestroyMatrix();
-            DisplayMatrix(); // Réafficher les pièces avec la mise à jour des interactions
+            DisplayMatrix(); 
         }
 
         public void DestroyMatrix()

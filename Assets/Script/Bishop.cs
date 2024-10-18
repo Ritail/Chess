@@ -9,8 +9,7 @@ namespace Chess
         public override List<Vector2Int> availableMouvments(Vector2Int position)
         {
             List<Vector2Int> mouvements = new List<Vector2Int>();
-
-            // Directions possibles pour le fou (diagonales)
+            
             int[,] directions = new int[,]
             {
                 { 1, 1 },   // Diagonale haut droite
@@ -18,11 +17,10 @@ namespace Chess
                 { -1, 1 },  // Diagonale haut gauche
                 { -1, -1 }   // Diagonale bas gauche
             };
-
-            // Explorer chaque direction
+            
             for (int i = 0; i < directions.GetLength(0); i++)
             {
-                for (int step = 1; step < 8; step++) // On peut se déplacer jusqu'à 7 cases
+                for (int step = 1; step < 8; step++) 
                 {
                   
                         

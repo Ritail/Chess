@@ -20,31 +20,25 @@
                  new Vector2Int(-1, 2),
                  new Vector2Int(-1, -2)
              };
-
-             // Explorer chaque mouvement
+             
              foreach (Vector2Int move in knightMoves)
              {
                  Vector2Int newPosition = position + move;
-
-                 // Vérifiez si la nouvelle position est valide
+                 
                  if (IsValidPosition(newPosition))
                  {
-                     // Récupérer la pièce à la nouvelle position dans la matrice du GameManager
                      Pièce pieceAtNewPosition = GameManager.Instance.Pieces[newPosition.x, newPosition.y];
 
                      if (pieceAtNewPosition == null)
                      {
-                         // Si la case est vide, ajouter le mouvement
                          mouvements.Add(newPosition);
                      }
                      else
                      {
-                         // Si la case est occupée par une pièce de couleur différente, on peut la capturer
                          if (pieceAtNewPosition.isWhite != this.isWhite)
                          {
                              mouvements.Add(newPosition);
                          }
-                         // Si la case est occupée par une pièce de la même couleur, on ne peut pas y aller
                      }
                  }
              }
