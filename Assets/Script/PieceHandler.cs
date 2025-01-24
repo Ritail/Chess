@@ -13,7 +13,9 @@ namespace Chess
         private Vector2Int _position;
         private Vector2Int _oldPosition;
         private Vector2Int _deplacer;
+        private bool _isFirtClick = true;
         public bool _isAValidMovement;
+        
 
         [SerializeField] private GameObject _indicateurMouvement;
 
@@ -42,8 +44,9 @@ namespace Chess
                 Pièce movingPiece = GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y];
                 GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y] = null;
                 GameManager.Instance.Pieces[_position.x, _position.y] = movingPiece;
-                Debug.Log("position :" + _position);
+                // Debug.Log("position :" + _position);
                 GameManager.Instance.EndTurn();
+                _isFirtClick = true;
             }
             if (_piece == null)
             {
@@ -51,20 +54,23 @@ namespace Chess
             }
             else
             {
-                if ((GameManager.Instance._isWhiteTurn && !_piece.isWhite) || (!GameManager.Instance._isWhiteTurn && _piece.isWhite))
+                if (_isFirtClick)
                 {
-                    Debug.Log("Ce n'est pas le tour de cette pièce.");
-                    return; 
-                }
+                    if ((GameManager.Instance._isWhiteTurn && !_piece.isWhite) || (!GameManager.Instance._isWhiteTurn && _piece.isWhite))
+                    {
+                        Debug.Log("Ce n'est pas le tour de cette pièce.");
+                        return; 
+                    }
                 
-                List<Vector2Int> positions = _piece.availableMouvments(_position);
+                    List<Vector2Int> positions = _piece.availableMouvments(_position);
                 
-                foreach (Vector2Int possiblemove in positions) 
-                {
-                    GameObject pieceGO = GameManager.Instance.PiecesDisplay[possiblemove.x, possiblemove.y];
-                    PieceHandler possiblePieceHandler = pieceGO.GetComponent<PieceHandler>();
-                    possiblePieceHandler.DefineAsPossibleMove(_position);
-                    Debug.Log("moove possible" + possiblemove);
+                    foreach (Vector2Int possiblemove in positions) 
+                    {
+                        GameObject pieceGO = GameManager.Instance.PiecesDisplay[possiblemove.x, possiblemove.y];
+                        PieceHandler possiblePieceHandler = pieceGO.GetComponent<PieceHandler>();
+                        possiblePieceHandler.DefineAsPossibleMove(_position);
+                        // Debug.Log("moove possible" + possiblemove);
+                    }
                 }
             }
             
@@ -74,9 +80,10 @@ namespace Chess
         {
             GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             _isAValidMovement = true;
+            _isFirtClick = false;
             _oldPosition = position;
             GameManager.Instance.clickPiece = _piece; 
-            Debug.Log("ancienne position : " + _oldPosition);
+            // Debug.Log("ancienne position : " + _oldPosition);
         }
         
         public void PositionBody(Vector2Int recuperationposition)

@@ -1,3 +1,5 @@
+using System;
+using MinMax.Heuristic;
 using Script;
 using UnityEngine;
 
@@ -23,15 +25,22 @@ namespace Chess
         [SerializeField] private GameObject _piecePrefafTransparent;
         [SerializeField] private Transform _girdParent;
         
+        private HeuristicHandler _heuristicHandler;
+        
         public Pièce[,] Pieces;
         public GameObject[,] PiecesDisplay;
 
         public Pièce clickPiece;
         public bool _isWhiteTurn = true;
 
-    
+
+        private void Awake()
+        {
+            _heuristicHandler = GetComponent<HeuristicHandler>();
+        }
+
         public void Start()
-         {
+        {
              Pieces = new Pièce[,]
             {
                  { BlackRook, BlackKnight, BlackBishop, BlackKing, BlackQueen, BlackBishop, BlackKnight, BlackRook},
@@ -74,9 +83,12 @@ namespace Chess
         }
         public void EndTurn()
         {
-            _isWhiteTurn = !_isWhiteTurn; 
+            int heuristicScore = _heuristicHandler.CalculateHeuristic();
+            Debug.Log("Heuristic = " + heuristicScore);
+            _isWhiteTurn = !_isWhiteTurn;
             DestroyMatrix();
             DisplayMatrix(); 
+            
         }
 
         public void DestroyMatrix()
