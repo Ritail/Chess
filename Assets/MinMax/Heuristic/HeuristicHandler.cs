@@ -13,7 +13,9 @@ namespace MinMax.Heuristic
         private int _blackPoints;
         private int _whitePoints;
         private int _globalPoints;
-        private int _positionBonus;
+        private int _globalBonus;
+        private int _positionBonusWhite;
+        private int _positionBonusBlack;
 
         private static Dictionary<Piece, int[,]> positionBonus;
         
@@ -140,58 +142,72 @@ namespace MinMax.Heuristic
             };
         }
 
+        private void Update()
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Debug.Log("Heuristic Update : " + _globalPoints);
+                Debug.Log("Bonus Update : " + _globalBonus);
+            }
+        }
+
         public int CalculateHeuristic()
         {
             _globalPoints = 0;
+            _globalBonus = 0;
             _blackPoints = 0;
             _whitePoints = 0;
-            _positionBonus = 0;
-            
-            foreach (Piece piece in _gameManager.Pieces)
-            {
-                Piece[,] pieces = _gameManager.Pieces;
-                for (int i = 0; i < pieces.GetLength(0); i++)
-                {
-                    for (int j = 0; j < pieces.GetLength(1); j++)
-                    {
-                        Piece piecess = pieces[i, j];
+            _positionBonusWhite = 0;
+            _positionBonusBlack = 0;
 
-                        if (piecess != null && positionBonus.ContainsKey(piecess))
+            for (int i = 0; i < _gameManager.Pieces.GetLength(0); i++)
+            {
+                for (int j = 0; j < _gameManager.Pieces.GetLength(1); j++)
+                {
+                    Piece piece = _gameManager.Pieces[i, j];
+
+                    if (piece != null)
+                    {
+                        if (piece.isWhite && positionBonus.ContainsKey(piece))
                         {
-                                _positionBonus += positionBonus[piecess][i,j];
+                            _positionBonusWhite += positionBonus[piece][i,j];
+                        }
+                        else if (!piece.isWhite && positionBonus.ContainsKey(piece))
+                        {
+                            _positionBonusBlack += positionBonus[piece][i,j];
                         }
                     }
                 }
-
+            }
+            
+            foreach (Piece piece in _gameManager.Pieces)
+            {
                 if (piece != null)
                 {
                     if (piece.isWhite)
-                    {
-                        _whitePoints += piece.Value + _positionBonus;
+                    { 
+                        _whitePoints += piece.Value;
                     }
-                    else
-                    {
-                        _blackPoints += piece.Value + _positionBonus;
+                    else 
+                    { 
+                        _blackPoints += piece.Value;
                     }
                 }
-                else
-                {
-                    Debug.LogError("Piece not found");
-                }
-                
-                
             }
 
             if (_gameManager._isWhiteTurn)
             {
-                _globalPoints = _whitePoints - _blackPoints;
+                _globalBonus = _positionBonusWhite - _positionBonusBlack;
+                _globalPoints = _whitePoints - _blackPoints + _positionBonusWhite - _positionBonusBlack;
             }
             else
             {
-                _globalPoints = _blackPoints - _whitePoints;
+                _globalBonus = _positionBonusBlack - _positionBonusWhite;
+                _globalPoints = _blackPoints - _whitePoints + _positionBonusBlack - _positionBonusWhite;
             }
             
-            return _globalPoints;
+            return _globalPoints; 
         }
     }
 }
+
