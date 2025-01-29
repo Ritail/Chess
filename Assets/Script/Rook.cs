@@ -4,7 +4,7 @@
  namespace Chess
  {
      [CreateAssetMenu(fileName = "Rook", menuName = "Piece/Rook")]
-     public class Rook : Pièce
+     public class Rook : Piece
      {
           private Vector2Int _currentUp = new Vector2Int(1,0) ;
          // private Vector2Int _currentRight = new Vector2Int(0,1);
@@ -33,7 +33,7 @@
                     
                     if (IsValidPosition(newPosition))
                     {
-                        Pièce pieceAtNewPosition = GameManager.Instance.Pieces[newX, newY];
+                        Piece pieceAtNewPosition = GameManager.Instance.Pieces[newX, newY];
                         
                         if (pieceAtNewPosition == null)
                         {

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Chess
 {
     [CreateAssetMenu(fileName = "King", menuName = "Piece/King")]
-    public class King : Pièce
+    public class King : Piece
     {
         public override List<Vector2Int> availableMouvments(Vector2Int position)
         {
@@ -27,7 +27,7 @@ namespace Chess
                 
                 if (IsValidPosition(newPosition))
                 {
-                    Pièce pieceAtNewPosition = GameManager.Instance.Pieces[newPosition.x, newPosition.y];
+                    Piece pieceAtNewPosition = GameManager.Instance.Pieces[newPosition.x, newPosition.y];
 
                     if (pieceAtNewPosition == null)
                     {

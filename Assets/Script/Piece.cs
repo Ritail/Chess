@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Chess
 {
-    public abstract class Pièce : ScriptableObject
+    public abstract class Piece : ScriptableObject
     {
         public Sprite sprite;
         public bool isWhite;

@@ -4,7 +4,7 @@
  namespace Chess
  {
      [CreateAssetMenu(fileName = "Pawn", menuName = "Piece/Pawn")]
-     public class Pawn : Pièce
+     public class Pawn : Piece
      {
          public override List<Vector2Int> availableMouvments(Vector2Int position)
          {
@@ -46,7 +46,7 @@
                          Vector2Int firstFrontBlack = position + firstFrontB;
                          if (IsValidPosition(firstFrontBlack))
                          {
-                             Pièce pieceAtFirstFrontBlack = GameManager.Instance.Pieces[firstFrontBlack.x, firstFrontBlack.y];
+                             Piece pieceAtFirstFrontBlack = GameManager.Instance.Pieces[firstFrontBlack.x, firstFrontBlack.y];
                              if (pieceAtFirstFrontBlack == null)
                              {
                                  mouvements.Add(firstFrontBlack);
@@ -58,7 +58,7 @@
                          Vector2Int diagonalRight = position + eat;
                          if (IsValidPosition(diagonalRight))
                          {
-                             Pièce pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
+                             Piece pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
                              if (pieceAtDiagonalRight != null && pieceAtDiagonalRight.isWhite)
                              {
                                  mouvements.Add(diagonalRight);
@@ -72,7 +72,7 @@
                      Vector2Int frontBlack = position + front;
                      if (IsValidPosition(frontBlack))
                      {
-                         Pièce pieceAtFrontBlack = GameManager.Instance.Pieces[frontBlack.x, frontBlack.y];
+                         Piece pieceAtFrontBlack = GameManager.Instance.Pieces[frontBlack.x, frontBlack.y];
                          if (pieceAtFrontBlack == null)
                          {
                              mouvements.Add(frontBlack);
@@ -84,7 +84,7 @@
                      Vector2Int diagonalRight = position + eat;
                      if (IsValidPosition(diagonalRight))
                      {
-                         Pièce pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
+                         Piece pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
                          if (pieceAtDiagonalRight != null && pieceAtDiagonalRight.isWhite)
                          {
                              mouvements.Add(diagonalRight);
@@ -102,7 +102,7 @@
                          Vector2Int firstFrontWhite = position + firstFrontW;
                          if (IsValidPosition(firstFrontWhite))
                          {
-                             Pièce pieceAtFirstFrontBlack = GameManager.Instance.Pieces[firstFrontWhite.x, firstFrontWhite.y];
+                             Piece pieceAtFirstFrontBlack = GameManager.Instance.Pieces[firstFrontWhite.x, firstFrontWhite.y];
                              if (pieceAtFirstFrontBlack == null)
                              {
                                  mouvements.Add(firstFrontWhite);
@@ -114,7 +114,7 @@
                          Vector2Int diagonalRight = position + eat;
                          if (IsValidPosition(diagonalRight))
                          {
-                             Pièce pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
+                             Piece pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
                              if (pieceAtDiagonalRight != null && pieceAtDiagonalRight.isWhite != isWhite)
                              {
                                  mouvements.Add(diagonalRight);
@@ -128,7 +128,7 @@
                      Vector2Int frontWhite = position + frontW;
                      if (IsValidPosition(frontWhite))
                      {
-                         Pièce pieceAtFirstFrontBlack = GameManager.Instance.Pieces[frontWhite.x, frontWhite.y];
+                         Piece pieceAtFirstFrontBlack = GameManager.Instance.Pieces[frontWhite.x, frontWhite.y];
                          if (pieceAtFirstFrontBlack == null)
                          {
                              mouvements.Add(frontWhite);
@@ -140,7 +140,7 @@
                      Vector2Int diagonalRight = position + eat;
                      if (IsValidPosition(diagonalRight))
                      {
-                         Pièce pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
+                         Piece pieceAtDiagonalRight = GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y];
                          if (pieceAtDiagonalRight != null && pieceAtDiagonalRight.isWhite!= isWhite)
                          {
                              GameManager.Instance.Pieces[diagonalRight.x, diagonalRight.y] = null;

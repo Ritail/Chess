@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using Chess;
 using UnityEngine;
 
 public class Node
 {
-    public Pièce[,] Pieces;
+    public Piece[,] Pieces;
     public bool IsWhiteTurn;
     
     public Node() { }
 
     
     
-    public Node(Pièce[,] pieces, bool isWhiteTurn)
+    public Node(Piece[,] pieces, bool isWhiteTurn)
     {
         Pieces = pieces;
         IsWhiteTurn = isWhiteTurn;
@@ -28,7 +26,7 @@ public class Node
         int _globalPoints = 0;
         int _blackPoints = 0;
         int _whitePoints = 0;
-        foreach (Pièce piece in Pieces)
+        foreach (Piece piece in Pieces)
         {
             if (piece != null)
             {
@@ -65,19 +63,19 @@ public class Node
     //     children.Add(node);
     // }
 
-    public Pièce[,] MovePiece(Pièce[,] pieces, Pièce piece, Vector2Int from, Vector2Int to)
+    public Piece[,] MovePiece(Piece[,] pieces, Piece piece, Vector2Int from, Vector2Int to)
     {
         // Déplacement de la piece sur le pieces
         return pieces;
     }
 
-    private Pièce[,] CreateCopy()
+    private Piece[,] CreateCopy()
     {
         if (Pieces == null) return null;
 
         int rows = Pieces.GetLength(0);
         int cols = Pieces.GetLength(1);
-        Pièce[,] newPieces = new Pièce[rows, cols];
+        Piece[,] newPieces = new Piece[rows, cols];
 
         for (int row = 0; row < rows; row++)
         {

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: -1093694968, guid: 4115af48df7cfd640b868ee410fd9df1, type: 3}
   isWhite: 0
-  Value: 1
+  Value: 100

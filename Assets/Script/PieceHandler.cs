@@ -8,9 +8,9 @@ namespace Chess
 {
     public class PieceHandler : MonoBehaviour , IPointerClickHandler
     {
-        private Pièce _piece;
+        private Piece _piece;
         private Image _image;
-        private Vector2Int _position;
+        public Vector2Int _position;
         private Vector2Int _oldPosition;
         private Vector2Int _deplacer;
         private bool _isFirtClick = true;
@@ -26,7 +26,7 @@ namespace Chess
                 _image = GetComponent<Image>();
         }
 
-        public void Body(Pièce piece, Vector2Int position)
+        public void Body(Piece piece, Vector2Int position)
         {
             _piece = piece;
             _position = position;
@@ -41,7 +41,7 @@ namespace Chess
             if (_isAValidMovement)
             {
                 _isAValidMovement = false;
-                Pièce movingPiece = GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y];
+                Piece movingPiece = GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y];
                 GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y] = null;
                 GameManager.Instance.Pieces[_position.x, _position.y] = movingPiece;
                 // Debug.Log("position :" + _position);

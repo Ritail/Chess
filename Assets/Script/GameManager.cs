@@ -8,18 +8,18 @@ namespace Chess
 {
         public class GameManager : MonoBehaviourSingleton<GameManager>
     {
-        [SerializeField] private Pièce BlackPawn;
-        [SerializeField] private Pièce WhitePawn;
-        [SerializeField] private Pièce WhiteRook;
-        [SerializeField] private Pièce BlackRook;
-        [SerializeField] private Pièce WhiteKnight;
-        [SerializeField] private Pièce BlackKnight;
-        [SerializeField] private Pièce WhiteBishop;
-        [SerializeField] private Pièce BlackBishop;
-        [SerializeField] private Pièce WhiteKing;
-        [SerializeField] private Pièce BlackKing;
-        [SerializeField] private Pièce WhiteQueen;
-        [SerializeField] private Pièce BlackQueen;
+        public Piece BlackPawn;
+        public Piece WhitePawn;
+        public Piece WhiteRook;
+        public Piece BlackRook;
+        public Piece WhiteKnight;
+        public Piece BlackKnight;
+        public Piece WhiteBishop;
+        public Piece BlackBishop;
+        public Piece WhiteKing;
+        public Piece BlackKing;
+        public Piece WhiteQueen; 
+        public Piece BlackQueen;
 
         [SerializeField] private GameObject _piecePrefaf;
         [SerializeField] private GameObject _piecePrefafTransparent;
@@ -27,10 +27,10 @@ namespace Chess
         
         private HeuristicHandler _heuristicHandler;
         
-        public Pièce[,] Pieces;
+        public Piece[,] Pieces;
         public GameObject[,] PiecesDisplay;
 
-        public Pièce clickPiece;
+        public Piece clickPiece;
         public bool _isWhiteTurn = true;
 
 
@@ -41,7 +41,7 @@ namespace Chess
 
         public void Start()
         {
-             Pieces = new Pièce[,]
+             Pieces = new Piece[,]
             {
                  { BlackRook, BlackKnight, BlackBishop, BlackKing, BlackQueen, BlackBishop, BlackKnight, BlackRook},
                  { BlackPawn,  BlackPawn, BlackPawn, BlackPawn,BlackPawn, BlackPawn,BlackPawn, BlackPawn},
