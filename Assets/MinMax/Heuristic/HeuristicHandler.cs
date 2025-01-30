@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
 using Chess;
+using Script;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MinMax.Heuristic
 {
-    public class HeuristicHandler : MonoBehaviour
+    public class HeuristicHandler : MonoBehaviourSingleton<HeuristicHandler>
     {
         private GameManager _gameManager;
 
         private int _blackPoints;
         private int _whitePoints;
-        private int _globalPoints;
-        private int _globalBonus;
+        public int _globalPoints;
+        public int _globalBonus;
         private int _positionBonusWhite;
         private int _positionBonusBlack;
 

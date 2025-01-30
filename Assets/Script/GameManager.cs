@@ -33,7 +33,6 @@ namespace Chess
         public Piece clickPiece;
         public bool _isWhiteTurn = true;
 
-
         private void Awake()
         {
             _heuristicHandler = GetComponent<HeuristicHandler>();
@@ -55,6 +54,18 @@ namespace Chess
              };
              DisplayMatrix();
          }
+        
+        private void Update()
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Node node = new Node(Pieces, _isWhiteTurn);
+                node.Children();
+                Debug.Log(" Children Node : " + node.Children().Count);
+                Debug.Log("Heuristic Update : " + node.HeursticValue());
+                Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
+            }
+        }
 
         public void DisplayMatrix()
         {
