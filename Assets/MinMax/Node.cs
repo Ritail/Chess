@@ -68,26 +68,4 @@ public class Node
         Pieces[to.x, to.y] = piece;
         return pieces;
     }
-
-    // private Piece[,] CreateCopy()
-    // {
-    //     if (Pieces == null) return null;
-    //
-    //     int rows = Pieces.GetLength(0);
-    //     int cols = Pieces.GetLength(1);
-    //     Piece[,] newPieces = new Piece[rows, cols];
-    //
-    //     for (int row = 0; row < rows; row++)
-    //     {
-    //         for (int col = 0; col < cols; col++)
-    //         {
-    //             if (Pieces[row, col] != null)
-    //             {
-    //                 newPieces[row, col] = Pieces[row, col];
-    //             }
-    //         }
-    //     }
-    //
-    //     return newPieces;
-    // }
 }
