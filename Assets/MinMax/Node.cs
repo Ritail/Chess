@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Chess;
 using MinMax.Heuristic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Node
@@ -16,6 +17,14 @@ public class Node
 
     public bool IsTerminal()
     {
+        if (GameManager.Instance.BlackKing.IsDestroyed())
+        {
+            return true;
+        }
+        if (GameManager.Instance.WhiteKing.IsDestroyed())
+        {
+            return true;
+        }
         
         return false;
     }

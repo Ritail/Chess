@@ -143,15 +143,6 @@ namespace MinMax.Heuristic
             };
         }
 
-        private void Update()
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                Debug.Log("Heuristic Update : " + _globalPoints);
-                Debug.Log("Bonus Update : " + _globalBonus);
-            }
-        }
-
         public int CalculateHeuristic()
         {
             _globalPoints = 0;

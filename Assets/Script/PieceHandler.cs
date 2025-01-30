@@ -15,12 +15,9 @@ namespace Chess
         private Vector2Int _deplacer;
         private bool _isFirtClick = true;
         public bool _isAValidMovement;
-        
 
         [SerializeField] private GameObject _indicateurMouvement;
-
         
-
         private void Awake()
         {
                 _image = GetComponent<Image>();
