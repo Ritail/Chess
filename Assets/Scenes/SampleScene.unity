@@ -2582,6 +2582,7 @@ GameObject:
   - component: {fileID: 1016554004}
   - component: {fileID: 1016554003}
   - component: {fileID: 1016554005}
+  - component: {fileID: 1016554006}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2616,8 +2617,9 @@ MonoBehaviour:
   _piecePrefaf: {fileID: 3789856467965022804, guid: 27874f1637738e14a95256149b99d723, type: 3}
   _piecePrefafTransparent: {fileID: 7750482411862658970, guid: b94913322fd3a3c469c09dca5a532a97, type: 3}
   _girdParent: {fileID: 2100254408}
+  _depth: 2
   clickPiece: {fileID: 0}
-  _isWhiteTurn: 1
+  _isWhiteTurn: 0
 --- !u!4 &1016554004
 Transform:
   m_ObjectHideFlags: 0
@@ -2647,6 +2649,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalPoints: 0
   _globalBonus: 0
+--- !u!114 &1016554006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016554002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9995bc1c758be418ab529ed7324c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1197637001
 GameObject:
   m_ObjectHideFlags: 0

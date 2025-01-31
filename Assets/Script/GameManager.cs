@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using MinMax;
 using MinMax.Heuristic;
 using Script;
 using UnityEngine;
@@ -24,47 +26,86 @@ namespace Chess
         [SerializeField] private GameObject _piecePrefaf;
         [SerializeField] private GameObject _piecePrefafTransparent;
         [SerializeField] private Transform _girdParent;
+        [SerializeField] private int _depth = 2;
         
         private HeuristicHandler _heuristicHandler;
+        private AIHandler _aiHandler;
+        private bool _initialized = true;
         
         public Piece[,] Pieces;
         public GameObject[,] PiecesDisplay;
 
         public Piece clickPiece;
         public bool _isWhiteTurn = true;
+        public Node bestNode;
 
         private void Awake()
         {
             _heuristicHandler = GetComponent<HeuristicHandler>();
+            _aiHandler = GetComponent<AIHandler>();
         }
 
         public void Start()
         {
              Pieces = new Piece[,]
             {
-                 { BlackRook, BlackKnight, BlackBishop, BlackKing, BlackQueen, BlackBishop, BlackKnight, BlackRook},
-                 { BlackPawn,  BlackPawn, BlackPawn, BlackPawn,BlackPawn, BlackPawn,BlackPawn, BlackPawn},
+                {null, null, null, null,null, null,null, null,},
+                 {null, null, null, null,null, null,null, null,},
+                 {null, null, null, WhiteBishop,null, null,null, null,},
+                 {null, null, WhiteRook, BlackKing,null, null,null, null,},
                  {null, null, null, null,null, null,null, null,},
                  {null, null, null, null,null, null,null, null,},
                  {null, null, null, null,null, null,null, null,},
-                 {null, null, null, null,null, null,null, null,},
-                 { WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn},
-                 { WhiteRook, WhiteKnight, WhiteBishop, WhiteKing, WhiteQueen, WhiteBishop, WhiteKnight, WhiteRook}
+                 {WhiteKing, null, null, null,null, null,null, null,}
                  
              };
              DisplayMatrix();
          }
         
-        private void Update()
+        private void FixedUpdate()
         {
             if (Input.GetKey(KeyCode.Space))
             {
                 Node node = new Node(Pieces, _isWhiteTurn);
-                node.Children();
+                
                 Debug.Log(" Children Node : " + node.Children().Count);
                 Debug.Log("Heuristic Update : " + node.HeursticValue());
                 Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
             }
+
+            if (Input.GetKey(KeyCode.Mouse0) && _initialized)
+            {
+                _initialized = false;
+                Node node = new Node(Pieces, _isWhiteTurn);
+                int maxValue = int.MinValue;
+                int bestChildrenValue = int.MinValue;
+                
+                
+                Debug.Log(" Children Node : " + node.Children().Count);
+                foreach (Node children in node.Children())
+                {
+                    maxValue = Mathf.Max(maxValue, _aiHandler.MinMax(children, _depth - 1 , false));
+
+                    if (bestChildrenValue < maxValue)
+                    {
+                        bestChildrenValue = maxValue;
+                        bestNode = children;
+                    }
+                }
+
+                if (bestNode != null)
+                {
+                    Pieces = bestNode.Pieces;
+                    Invoke("ResetBool", 0.5f);
+                    // EndTurn();
+                }
+                
+            }
+        }
+
+        private void ResetBool()
+        {
+            _initialized = true;
         }
 
         public void DisplayMatrix()
@@ -94,8 +135,6 @@ namespace Chess
         }
         public void EndTurn()
         {
-            int heuristicScore = _heuristicHandler.CalculateHeuristic();
-            Debug.Log("Heuristic = " + heuristicScore);
             _isWhiteTurn = !_isWhiteTurn;
             DestroyMatrix();
             DisplayMatrix(); 

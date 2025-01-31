@@ -5,9 +5,7 @@ namespace MinMax
 {
     public class AIHandler : MonoBehaviour
     {
-        public int searchDepth = 3;
-        public bool isWhisteAI = false;
-        private int MinMax(Node node, int depth, bool maximizingPlayer)
+        public int MinMax(Node node, int depth, bool maximizingPlayer)
         {
             if (depth == 0 || node.IsTerminal())
             {

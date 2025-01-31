@@ -32,7 +32,7 @@ public class Node
     public int HeursticValue()
     { 
         int value = 0;
-        value = HeuristicHandler.Instance.CalculateHeuristic();
+        value = HeuristicHandler.Instance.CalculateHeuristic(Pieces);
         return value;
     }
 

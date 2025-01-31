@@ -143,7 +143,7 @@ namespace MinMax.Heuristic
             };
         }
 
-        public int CalculateHeuristic()
+        public int CalculateHeuristic(Piece[,] pieces)
         {
             _globalPoints = 0;
             _globalBonus = 0;
@@ -152,27 +152,28 @@ namespace MinMax.Heuristic
             _positionBonusWhite = 0;
             _positionBonusBlack = 0;
 
-            for (int i = 0; i < _gameManager.Pieces.GetLength(0); i++)
-            {
-                for (int j = 0; j < _gameManager.Pieces.GetLength(1); j++)
-                {
-                    Piece piece = _gameManager.Pieces[i, j];
-
-                    if (piece != null)
-                    {
-                        if (piece.isWhite && positionBonus.ContainsKey(piece))
-                        {
-                            _positionBonusWhite += positionBonus[piece][i,j];
-                        }
-                        else if (!piece.isWhite && positionBonus.ContainsKey(piece))
-                        {
-                            _positionBonusBlack += positionBonus[piece][i,j];
-                        }
-                    }
-                }
-            }
+            // for (int i = 0; i < _gameManager.Pieces.GetLength(0); i++)
+            // {
+            //     for (int j = 0; j < _gameManager.Pieces.GetLength(1); j++)
+            //     {
+            //         Piece piece = _gameManager.Pieces[i, j];
+            //
+            //         if (piece != null)
+            //         {
+            //             if (piece.isWhite && positionBonus.ContainsKey(piece))
+            //             {
+            //                 _positionBonusWhite += positionBonus[piece][i,j];
+            //             }
+            //             else if (!piece.isWhite && positionBonus.ContainsKey(piece))
+            //             {
+            //                 _positionBonusBlack += positionBonus[piece][i,j];
+            //             }
+            //         }
+            //     }
+            // }
             
-            foreach (Piece piece in _gameManager.Pieces)
+           
+            foreach (Piece piece in pieces)
             {
                 if (piece != null)
                 {
@@ -186,16 +187,17 @@ namespace MinMax.Heuristic
                     }
                 }
             }
+            
 
             if (_gameManager._isWhiteTurn)
             {
-                _globalBonus = _positionBonusWhite - _positionBonusBlack;
-                _globalPoints = _whitePoints - _blackPoints + _positionBonusWhite - _positionBonusBlack;
+                //_globalBonus = _positionBonusWhite - _positionBonusBlack;
+                _globalPoints = _whitePoints - _blackPoints; //+ _positionBonusWhite - _positionBonusBlack;
             }
             else
             {
-                _globalBonus = _positionBonusBlack - _positionBonusWhite;
-                _globalPoints = _blackPoints - _whitePoints + _positionBonusBlack - _positionBonusWhite;
+                //_globalBonus = _positionBonusBlack - _positionBonusWhite;
+                _globalPoints = _blackPoints - _whitePoints; //+ _positionBonusBlack - _positionBonusWhite;
             }
             
             return _globalPoints; 
