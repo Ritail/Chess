@@ -143,7 +143,7 @@ namespace MinMax.Heuristic
             };
         }
 
-        public int CalculateHeuristic(Piece[,] pieces)
+        public int CalculateHeuristic(Piece[,] pieces, bool isWhite, bool isWhiteCheck)
         {
             _globalPoints = 0;
             _globalBonus = 0;
@@ -189,7 +189,7 @@ namespace MinMax.Heuristic
             }
             
 
-            if (_gameManager._isWhiteTurn)
+            if (isWhiteCheck)
             {
                 //_globalBonus = _positionBonusWhite - _positionBonusBlack;
                 _globalPoints = _whitePoints - _blackPoints; //+ _positionBonusWhite - _positionBonusBlack;

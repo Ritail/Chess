@@ -8,11 +8,13 @@ public class Node
 {
     public Piece[,] Pieces;
     public bool IsWhiteTurn;
+    public bool IsWhiteCheck;
     
-    public Node(Piece[,] pieces, bool isWhiteTurn)
+    public Node(Piece[,] pieces, bool isWhiteTurn, bool isWhiteCheck)
     {
         Pieces = (Piece[,])pieces.Clone();
         IsWhiteTurn = isWhiteTurn;
+        IsWhiteCheck = isWhiteCheck;
     }
 
     public bool IsTerminal()
@@ -32,7 +34,7 @@ public class Node
     public int HeursticValue()
     { 
         int value = 0;
-        value = HeuristicHandler.Instance.CalculateHeuristic(Pieces);
+        value = HeuristicHandler.Instance.CalculateHeuristic(Pieces, IsWhiteTurn, IsWhiteCheck);
         return value;
     }
 
@@ -48,11 +50,11 @@ public class Node
                 if (piece != null && piece.isWhite == IsWhiteTurn)
                 {
                     Vector2Int position = new Vector2Int(x, y);
-                    List<Vector2Int> possibleMove = piece.availableMouvments(position);
+                    List<Vector2Int> possibleMove = piece.availableMovements(position, Pieces);
 
                     foreach (var move in possibleMove)
                     {
-                        Node node = new Node(Pieces, false);
+                        Node node = new Node(Pieces, !IsWhiteTurn, IsWhiteCheck);
                         node.MovePiece(Pieces, piece, new Vector2Int(x, y), move);
                         children.Add(node);
                     }

@@ -4,6 +4,7 @@ using MinMax;
 using MinMax.Heuristic;
 using Script;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace Chess
@@ -30,14 +31,13 @@ namespace Chess
         
         private HeuristicHandler _heuristicHandler;
         private AIHandler _aiHandler;
-        private bool _initialized = true;
         
         public Piece[,] Pieces;
         public GameObject[,] PiecesDisplay;
-
+        public bool IsWhiteStartTurn;
         public Piece clickPiece;
-        public bool _isWhiteTurn = true;
-        public Node bestNode;
+        
+        [HideInInspector] public bool IsWhiteTurn;
 
         private void Awake()
         {
@@ -47,65 +47,67 @@ namespace Chess
 
         public void Start()
         {
-             Pieces = new Piece[,]
-            {
-                {null, null, null, null,null, null,null, null,},
-                 {null, null, null, null,null, null,null, null,},
-                 {null, null, null, WhiteBishop,null, null,null, null,},
-                 {null, null, WhiteRook, BlackKing,null, null,null, null,},
-                 {null, null, null, null,null, null,null, null,},
-                 {null, null, null, null,null, null,null, null,},
-                 {null, null, null, null,null, null,null, null,},
-                 {WhiteKing, null, null, null,null, null,null, null,}
-                 
-             };
-             DisplayMatrix();
-         }
+            SetupBoard(); 
+        }
         
-        private void FixedUpdate()
+        private void Update()
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                Node node = new Node(Pieces, _isWhiteTurn);
+                Node node = new Node(Pieces, IsWhiteTurn, IsWhiteTurn);
                 
                 Debug.Log(" Children Node : " + node.Children().Count);
                 Debug.Log("Heuristic Update : " + node.HeursticValue());
                 Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
             }
 
-            if (Input.GetKey(KeyCode.Mouse0) && _initialized)
+            if (Input.GetKeyUp(KeyCode.Mouse0))
             {
-                _initialized = false;
-                Node node = new Node(Pieces, _isWhiteTurn);
+                Node node = new Node(Pieces, IsWhiteTurn, IsWhiteTurn);
                 int maxValue = int.MinValue;
-                int bestChildrenValue = int.MinValue;
-                
-                
-                Debug.Log(" Children Node : " + node.Children().Count);
-                foreach (Node children in node.Children())
-                {
-                    maxValue = Mathf.Max(maxValue, _aiHandler.MinMax(children, _depth - 1 , false));
+                Node bestNode = null;
 
-                    if (bestChildrenValue < maxValue)
+                var children = node.Children();
+                Debug.Log(" Children Node : " + children.Count);
+                foreach (Node child in children)
+                {
+                    var value = _aiHandler.MinMax(child, _depth - 1 , false);
+                    Debug.Log("Children with heuristic : " + value);
+                    
+                    if (value > maxValue)
                     {
-                        bestChildrenValue = maxValue;
-                        bestNode = children;
+                        maxValue = value;
+                        bestNode = child;
                     }
                 }
 
                 if (bestNode != null)
                 {
                     Pieces = bestNode.Pieces;
-                    Invoke("ResetBool", 0.5f);
-                    // EndTurn();
+                    EndTurn();
                 }
                 
             }
         }
 
-        private void ResetBool()
+        [ContextMenu("Setup Board")]
+        public void SetupBoard()
         {
-            _initialized = true;
+            Pieces = new Piece[,]
+            {
+                {null, null, null, null,null, null,null, null,},
+                {null, null, null, null,null, null,null, null,},
+                {null, null, null, WhiteBishop,null, null,null, null,},
+                {null, null, WhiteRook, BlackKing,null, null,null, null,},
+                {null, null, null, null,null, null,null, null,},
+                {null, null, null, null,null, null,null, null,},
+                {null, null, null, null,null, null,null, null,},
+                {WhiteKing, null, null, null,null, null,null, null,}
+                 
+            };
+            IsWhiteTurn = IsWhiteStartTurn;
+            DestroyMatrix();
+            DisplayMatrix();
         }
 
         public void DisplayMatrix()
@@ -135,10 +137,9 @@ namespace Chess
         }
         public void EndTurn()
         {
-            _isWhiteTurn = !_isWhiteTurn;
             DestroyMatrix();
             DisplayMatrix(); 
-            
+            IsWhiteTurn = !IsWhiteTurn;
         }
 
         public void DestroyMatrix()

@@ -53,13 +53,13 @@ namespace Chess
             {
                 if (_isFirtClick)
                 {
-                    if ((GameManager.Instance._isWhiteTurn && !_piece.isWhite) || (!GameManager.Instance._isWhiteTurn && _piece.isWhite))
+                    if ((GameManager.Instance.IsWhiteTurn && !_piece.isWhite) || (!GameManager.Instance.IsWhiteTurn && _piece.isWhite))
                     {
                         Debug.Log("Ce n'est pas le tour de cette pièce.");
                         return; 
                     }
                 
-                    List<Vector2Int> positions = _piece.availableMouvments(_position);
+                    List<Vector2Int> positions = _piece.availableMovements(_position, GameManager.Instance.Pieces);
                 
                     foreach (Vector2Int possiblemove in positions) 
                     {

@@ -6,7 +6,7 @@ namespace Chess
     [CreateAssetMenu(fileName = "King", menuName = "Piece/King")]
     public class King : Piece
     {
-        public override List<Vector2Int> availableMouvments(Vector2Int position)
+        public override List<Vector2Int> availableMovements(Vector2Int position, Piece[,] pieces)
         {
             List<Vector2Int> mouvements = new List<Vector2Int>();
             Vector2Int[] kingMoves = new Vector2Int[]
@@ -27,7 +27,7 @@ namespace Chess
                 
                 if (IsValidPosition(newPosition))
                 {
-                    Piece pieceAtNewPosition = GameManager.Instance.Pieces[newPosition.x, newPosition.y];
+                    Piece pieceAtNewPosition = pieces[newPosition.x, newPosition.y];
 
                     if (pieceAtNewPosition == null)
                     {
@@ -42,8 +42,6 @@ namespace Chess
                     }
                 }
             }
-
-
             return mouvements;
         }
 

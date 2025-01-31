@@ -6,7 +6,7 @@
      [CreateAssetMenu(fileName = "Queen", menuName = "Piece/Queen")]
      public class Queen : Piece
      {
-         public override List<Vector2Int> availableMouvments(Vector2Int position)
+         public override List<Vector2Int> availableMovements(Vector2Int position, Piece[,] pieces)
          {
              List<Vector2Int> mouvements = new List<Vector2Int>();
 
@@ -36,7 +36,7 @@
                 
                 if (IsValidPosition(newPosition))
                 {
-                    Piece pieceAtNewPosition = GameManager.Instance.Pieces[newX, newY];
+                    Piece pieceAtNewPosition = pieces[newX, newY];
                     if (pieceAtNewPosition == null)
                     {
                         
