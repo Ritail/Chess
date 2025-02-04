@@ -27,7 +27,7 @@ namespace Chess
         [SerializeField] private GameObject _piecePrefaf;
         [SerializeField] private GameObject _piecePrefafTransparent;
         [SerializeField] private Transform _girdParent;
-        [SerializeField] private int _depth = 2;
+        [SerializeField] private int _depth = 3;
         
         private HeuristicHandler _heuristicHandler;
         private AIHandler _aiHandler;
@@ -48,6 +48,8 @@ namespace Chess
         public void Start()
         {
             SetupBoard(); 
+            WhiteKing.IsInCheck = false;
+            BlackKing.IsInCheck = false;
         }
         
         private void Update()
@@ -56,9 +58,40 @@ namespace Chess
             {
                 Node node = new Node(Pieces, IsWhiteTurn, IsWhiteTurn);
                 
-                Debug.Log(" Children Node : " + node.Children().Count);
-                Debug.Log("Heuristic Update : " + node.HeursticValue());
-                Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
+                // Debug.Log(" Children Node : " + node.Children().Count);
+                // Debug.Log("Heuristic Update : " + node.HeursticValue());
+                // Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
+                Rules rules = new Rules(Pieces, IsWhiteTurn);
+                rules.FindKing();
+
+                if (rules.IsKingInCheck())
+                {
+                    Debug.Log("King In Check : " + rules.IsKingInCheck());
+                    if (IsWhiteTurn)
+                    {
+                        WhiteKing.IsInCheck = true;
+                        Debug.Log("White King in Check");
+                    }
+                    else
+                    {
+                        BlackKing.IsInCheck = true;
+                        Debug.Log("Black King in Check");
+                    }
+                }
+                else
+                {
+                    if (IsWhiteTurn)
+                    {
+                        WhiteKing.IsInCheck = false;
+                        Debug.Log("White King not Check");
+                    }
+                    else
+                    {
+                        BlackKing.IsInCheck = false;
+                        Debug.Log("Black King not Check");
+                    }
+                }
+                
             }
 
             if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -95,16 +128,37 @@ namespace Chess
         {
             Pieces = new Piece[,]
             {
-                {null, null, null, null,null, null,null, null,},
-                {null, null, null, null,null, null,null, null,},
-                {null, null, null, WhiteBishop,null, null,null, null,},
-                {null, null, WhiteRook, BlackKing,null, null,null, null,},
-                {null, null, null, null,null, null,null, null,},
-                {null, null, null, null,null, null,null, null,},
-                {null, null, null, null,null, null,null, null,},
-                {WhiteKing, null, null, null,null, null,null, null,}
-                 
+                { null, null, null, null, null, null, null, null },
+                { null, null, null, null, null, null, null, null },
+                { null, null, null, null, null, null, null, null },
+                { null, null, null, null, null, null, null, null },
+                { null, WhiteBishop, null, null, null, null, null, null },
+                { WhiteKnight, WhiteKnight, null, null, null, null, null, null },
+                { BlackPawn, BlackKing, null, WhiteKing, null, null, null, null },
+                { null, null, null, null, null, null, null, null },
             };
+            // Pieces = new Piece[,]
+            // {
+            //     { BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, BlackRook },
+            //     { BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn },
+            //     { null, null, null, null, null, null, null, null },
+            //     { null, null, null, null, null, null, null, null },
+            //     { null, null, null, null, null, null, null, null },
+            //     { null, null, null, null, null, null, null, null },
+            //     { WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn },
+            //     { WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook },
+            // };
+            // Pieces = new Piece[,]
+            // {
+            //     { null, null, null, null, null, null, null, null },
+            //     { WhiteRook, null, null, null, null, null, null, null },
+            //     { null, null, null, null, null, WhiteKing, null, null },
+            //     { null, null, null, null, null, null, null, null },
+            //     { null, null, null, null, null, null, null, null },
+            //     { null, null, null, null, null, null, null, null },
+            //     { null, BlackKing, null, null, null, null, null, null },
+            //     { null, null, null, null, WhiteRook, null, null, null },
+            // };
             IsWhiteTurn = IsWhiteStartTurn;
             DestroyMatrix();
             DisplayMatrix();

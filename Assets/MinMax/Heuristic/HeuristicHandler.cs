@@ -178,7 +178,7 @@ namespace MinMax.Heuristic
                 if (piece != null)
                 {
                     if (piece.isWhite)
-                    { 
+                    {
                         _whitePoints += piece.Value;
                     }
                     else 
@@ -187,16 +187,29 @@ namespace MinMax.Heuristic
                     }
                 }
             }
-            
 
             if (isWhiteCheck)
             {
-                //_globalBonus = _positionBonusWhite - _positionBonusBlack;
+                if (_gameManager.WhiteKing.IsInCheck)
+                {
+                    _whitePoints -= 30000;
+                }else if (_gameManager.BlackKing.IsInCheck)
+                {
+                    _whitePoints += 30000;
+                }
+                // _globalBonus = _positionBonusWhite - _positionBonusBlack;
                 _globalPoints = _whitePoints - _blackPoints; //+ _positionBonusWhite - _positionBonusBlack;
             }
             else
             {
-                //_globalBonus = _positionBonusBlack - _positionBonusWhite;
+                if (_gameManager.WhiteKing.IsInCheck)
+                {
+                    _blackPoints += 20000;
+                }else if (_gameManager.BlackKing.IsInCheck)
+                {
+                    _blackPoints -= 20000;
+                }
+                // _globalBonus = _positionBonusBlack - _positionBonusWhite;
                 _globalPoints = _blackPoints - _whitePoints; //+ _positionBonusBlack - _positionBonusWhite;
             }
             

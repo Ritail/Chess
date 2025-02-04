@@ -44,7 +44,5 @@ namespace Chess
             }
             return mouvements;
         }
-
-        
     }
 }

@@ -41,7 +41,6 @@ namespace Chess
                 Piece movingPiece = GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y];
                 GameManager.Instance.Pieces[_oldPosition.x, _oldPosition.y] = null;
                 GameManager.Instance.Pieces[_position.x, _position.y] = movingPiece;
-                // Debug.Log("position :" + _position);
                 GameManager.Instance.EndTurn();
                 _isFirtClick = true;
             }
@@ -66,7 +65,6 @@ namespace Chess
                         GameObject pieceGO = GameManager.Instance.PiecesDisplay[possiblemove.x, possiblemove.y];
                         PieceHandler possiblePieceHandler = pieceGO.GetComponent<PieceHandler>();
                         possiblePieceHandler.DefineAsPossibleMove(_position);
-                        // Debug.Log("moove possible" + possiblemove);
                     }
                 }
             }

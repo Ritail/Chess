@@ -8,6 +8,7 @@ namespace Chess
         public Sprite sprite;
         public bool isWhite;
         public int Value;
+        public bool IsInCheck;
 
         public abstract List<Vector2Int> availableMovements(Vector2Int position, Piece[,] pieces);
         public bool IsValidPosition(Vector2Int pos)
