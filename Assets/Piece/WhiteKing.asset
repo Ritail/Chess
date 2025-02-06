@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2a16874e0c4d71a0c73f478a5b66a0, type: 3}
   m_Name: WhiteKing
   m_EditorClassIdentifier: 
-  sprite: {fileID: -196933619, guid: 4115af48df7cfd640b868ee410fd9df1, type: 3}
+  sprite: {fileID: -728090687, guid: 4115af48df7cfd640b868ee410fd9df1, type: 3}
   isWhite: 1
   Value: 20000
+  IsInCheck: 1
+  IsCheckMate: 0

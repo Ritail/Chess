@@ -77,7 +77,7 @@ namespace Chess
             _isAValidMovement = true;
             _isFirtClick = false;
             _oldPosition = position;
-            GameManager.Instance.clickPiece = _piece; 
+            GameManager.Instance.ClickPiece = _piece; 
             // Debug.Log("ancienne position : " + _oldPosition);
         }
         

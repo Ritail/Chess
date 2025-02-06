@@ -192,10 +192,19 @@ namespace MinMax.Heuristic
             {
                 if (_gameManager.WhiteKing.IsInCheck)
                 {
-                    _whitePoints -= 30000;
-                }else if (_gameManager.BlackKing.IsInCheck)
+                    _whitePoints -= 50000;
+                    if (_gameManager.WhiteKing.IsCheckMate)
+                    {
+                        _whitePoints -= 100000;
+                    }
+                }
+                else if (_gameManager.BlackKing.IsInCheck)
                 {
-                    _whitePoints += 30000;
+                    _whitePoints += 50000;
+                    if (_gameManager.BlackKing.IsCheckMate)
+                    {
+                        _whitePoints += 100000;
+                    }
                 }
                 // _globalBonus = _positionBonusWhite - _positionBonusBlack;
                 _globalPoints = _whitePoints - _blackPoints; //+ _positionBonusWhite - _positionBonusBlack;
@@ -204,10 +213,19 @@ namespace MinMax.Heuristic
             {
                 if (_gameManager.WhiteKing.IsInCheck)
                 {
-                    _blackPoints += 20000;
-                }else if (_gameManager.BlackKing.IsInCheck)
+                    _blackPoints += 50000;
+                    if (_gameManager.WhiteKing.IsCheckMate)
+                    {
+                        _blackPoints += 100000;
+                    }
+                }
+                else if (_gameManager.BlackKing.IsInCheck)
                 {
-                    _blackPoints -= 20000;
+                    _blackPoints -= 50000;
+                    if (_gameManager.BlackKing.IsCheckMate)
+                    {
+                        _blackPoints -= 100000;
+                    }
                 }
                 // _globalBonus = _positionBonusBlack - _positionBonusWhite;
                 _globalPoints = _blackPoints - _whitePoints; //+ _positionBonusBlack - _positionBonusWhite;

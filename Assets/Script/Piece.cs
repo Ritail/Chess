@@ -9,6 +9,7 @@ namespace Chess
         public bool isWhite;
         public int Value;
         public bool IsInCheck;
+        public bool IsCheckMate;
 
         public abstract List<Vector2Int> availableMovements(Vector2Int position, Piece[,] pieces);
         public bool IsValidPosition(Vector2Int pos)

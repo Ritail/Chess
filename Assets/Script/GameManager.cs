@@ -35,7 +35,7 @@ namespace Chess
         public Piece[,] Pieces;
         public GameObject[,] PiecesDisplay;
         public bool IsWhiteStartTurn;
-        public Piece clickPiece;
+        public Piece ClickPiece;
         
         [HideInInspector] public bool IsWhiteTurn;
 
@@ -50,48 +50,53 @@ namespace Chess
             SetupBoard(); 
             WhiteKing.IsInCheck = false;
             BlackKing.IsInCheck = false;
+            WhiteKing.IsCheckMate = false;
+            BlackKing.IsCheckMate = false;
         }
         
         private void Update()
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (IsWhiteTurn)
             {
-                Node node = new Node(Pieces, IsWhiteTurn, IsWhiteTurn);
-                
-                // Debug.Log(" Children Node : " + node.Children().Count);
-                // Debug.Log("Heuristic Update : " + node.HeursticValue());
-                // Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
-                Rules rules = new Rules(Pieces, IsWhiteTurn);
-                rules.FindKing();
-
-                if (rules.IsKingInCheck())
+                if (WhiteKing.IsInCheck)
                 {
-                    Debug.Log("King In Check : " + rules.IsKingInCheck());
-                    if (IsWhiteTurn)
+                    Debug.Log("White King in Check");
+                    
+                    if (WhiteKing.IsCheckMate)
                     {
-                        WhiteKing.IsInCheck = true;
-                        Debug.Log("White King in Check");
-                    }
-                    else
+                        Debug.Log("Black Win");
+                        Time.timeScale = 0;
+                    } 
+                }
+                else
+                {
+                    WhiteKing.IsInCheck = false;
+                }
+            }
+            else
+            {
+                if (BlackKing.IsInCheck)
+                {
+                    Debug.Log("Black King in Check");
+                    if (BlackKing.IsCheckMate)
                     {
-                        BlackKing.IsInCheck = true;
-                        Debug.Log("Black King in Check");
+                        Debug.Log("White Win");
+                        Time.timeScale = 0;
                     }
                 }
                 else
                 {
-                    if (IsWhiteTurn)
-                    {
-                        WhiteKing.IsInCheck = false;
-                        Debug.Log("White King not Check");
-                    }
-                    else
-                    {
-                        BlackKing.IsInCheck = false;
-                        Debug.Log("Black King not Check");
-                    }
+                    BlackKing.IsInCheck = false;
                 }
+            }
+            
+            if (Input.GetKey(KeyCode.Space))
+            {
+                // Node node = new Node(Pieces, IsWhiteTurn, IsWhiteTurn);
                 
+                // Debug.Log(" Children Node : " + node.Children().Count);
+                // Debug.Log("Heuristic Update : " + node.HeursticValue());
+                // Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
             }
 
             if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -102,8 +107,47 @@ namespace Chess
 
                 var children = node.Children();
                 Debug.Log(" Children Node : " + children.Count);
+                
                 foreach (Node child in children)
                 {
+                    Rules.FindKing(child.Pieces,child.IsWhiteTurn);
+                    if (Rules.IsKingInCheck(child.Pieces, child.IsWhiteTurn))
+                    {
+                        if (IsWhiteTurn) 
+                        {
+                            WhiteKing.IsInCheck = true;
+                            Debug.Log("White King in Check");
+                            if (Rules.IsCheckMate(child.Pieces, child.IsWhiteTurn))
+                            {
+                                WhiteKing.IsCheckMate = true;
+                                Debug.Log("White King in CheckMate");
+                            }
+                        }
+                        else
+                        {
+                            BlackKing.IsInCheck = true;
+                            Debug.Log("Black King in Check");
+                            if (Rules.IsCheckMate(child.Pieces, child.IsWhiteTurn))
+                            {
+                                BlackKing.IsCheckMate = true;
+                                Debug.Log("Black King in CheckMate");
+                            } 
+                        }
+                    }
+                    else
+                    {
+                        if (IsWhiteTurn)
+                        {
+                            WhiteKing.IsInCheck = false;
+                            Debug.Log("White King not Check");
+                        }
+                        else
+                        {
+                            BlackKing.IsInCheck = false;
+                            Debug.Log("Black King not Check");
+                        }
+                    }
+                    
                     var value = _aiHandler.MinMax(child, _depth - 1 , false);
                     Debug.Log("Children with heuristic : " + value);
                     
@@ -151,12 +195,12 @@ namespace Chess
             // Pieces = new Piece[,]
             // {
             //     { null, null, null, null, null, null, null, null },
-            //     { WhiteRook, null, null, null, null, null, null, null },
+            //     { WhiteRook, null, WhitePawn, null, null, null, null, null },
             //     { null, null, null, null, null, WhiteKing, null, null },
             //     { null, null, null, null, null, null, null, null },
-            //     { null, null, null, null, null, null, null, null },
-            //     { null, null, null, null, null, null, null, null },
-            //     { null, BlackKing, null, null, null, null, null, null },
+            //     { null, null, null, null, null, null, null, WhitePawn },
+            //     { BlackPawn, null, null, null, null, null, null, null },
+            //     { null, BlackKing, null, null, null, BlackPawn, null, null },
             //     { null, null, null, null, WhiteRook, null, null, null },
             // };
             IsWhiteTurn = IsWhiteStartTurn;
@@ -191,6 +235,7 @@ namespace Chess
         }
         public void EndTurn()
         {
+            // Rules.PromotePawn(Pieces,IsWhiteTurn,WhiteQueen, BlackQueen);
             DestroyMatrix();
             DisplayMatrix(); 
             IsWhiteTurn = !IsWhiteTurn;

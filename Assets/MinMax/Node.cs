@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Data;
 using Chess;
+using MinMax;
 using MinMax.Heuristic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,14 +21,11 @@ public class Node
 
     public bool IsTerminal()
     {
-        if (GameManager.Instance.BlackKing.IsDestroyed())
+        if (Children().Count == 0)
         {
             return true;
         }
-        if (GameManager.Instance.WhiteKing.IsDestroyed())
-        {
-            return true;
-        }
+        Debug.Log("heuristic value is terminal : " + HeursticValue());
         
         return false;
     }
@@ -56,6 +55,8 @@ public class Node
                     {
                         Node node = new Node(Pieces, !IsWhiteTurn, IsWhiteCheck);
                         node.MovePiece(Pieces, piece, new Vector2Int(x, y), move);
+                        Rules.PromotePawn(node.Pieces, IsWhiteTurn, GameManager.Instance.WhiteQueen, GameManager.Instance.BlackQueen);
+                        Rules.IsKingInCheck(node.Pieces, IsWhiteTurn);
                         children.Add(node);
                     }
                 }
