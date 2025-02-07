@@ -25,7 +25,6 @@ public class Node
         {
             return true;
         }
-        // Debug.Log("heuristic value is terminal : " + HeursticValue());
         
         return false;
     }
@@ -56,7 +55,6 @@ public class Node
                         Node node = new Node(Pieces, !IsWhiteTurn, IsWhiteCheck);
                         node.MovePiece(node.Pieces, piece, new Vector2Int(x, y), move);
                         Rules.PromotePawn(node.Pieces, IsWhiteTurn, GameManager.Instance.WhiteQueen, GameManager.Instance.BlackQueen);
-                        // Rules.IsKingInCheck(node.Pieces, IsWhiteTurn);
                         children.Add(node);
                     }
                 }
@@ -67,7 +65,6 @@ public class Node
 
     public Piece[,] MovePiece(Piece[,] pieces, Piece piece, Vector2Int from, Vector2Int to)
     {
-        Pieces = (Piece[,])pieces.Clone();
         Pieces[from.x, from.y] = null;
         Pieces[to.x, to.y] = piece;
         return pieces;

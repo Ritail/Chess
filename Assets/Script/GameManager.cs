@@ -9,8 +9,9 @@ using UnityEngine.Serialization;
 
 namespace Chess
 {
-        public class GameManager : MonoBehaviourSingleton<GameManager>
+    public class GameManager : MonoBehaviourSingleton<GameManager>
     {
+        [Header("<color=white>===== Piece =====</color>")]
         public Piece BlackPawn;
         public Piece WhitePawn;
         public Piece WhiteRook;
@@ -23,11 +24,13 @@ namespace Chess
         public Piece BlackKing;
         public Piece WhiteQueen; 
         public Piece BlackQueen;
-
+        [Header("<color=blue>===== Board Settings =====</color>")]
         [SerializeField] private GameObject _piecePrefaf;
         [SerializeField] private GameObject _piecePrefafTransparent;
         [SerializeField] private Transform _girdParent;
+        [Header("<color=red>===== Settings =====</color>")]
         [SerializeField] private int _depth = 3;
+        [SerializeField] private BoardType _chooseBoard = BoardType.BaseBoard;
         
         private HeuristicHandler _heuristicHandler;
         private AIHandler _aiHandler;
@@ -56,48 +59,6 @@ namespace Chess
         
         private void Update()
         {
-            // if (IsWhiteTurn)
-            // {
-            //     if (WhiteKing.IsInCheck)
-            //     {
-            //         Debug.Log("White King in Check");
-            //         
-            //         if (WhiteKing.IsCheckMate)
-            //         {
-            //             Debug.Log("Black Win");
-            //             Time.timeScale = 0;
-            //         } 
-            //     }
-            //     else
-            //     {
-            //         WhiteKing.IsInCheck = false;
-            //     }
-            // }
-            // else
-            // {
-            //     if (BlackKing.IsInCheck)
-            //     {
-            //         Debug.Log("Black King in Check");
-            //         if (BlackKing.IsCheckMate)
-            //         {
-            //             Debug.Log("White Win");
-            //             Time.timeScale = 0;
-            //         }
-            //     }
-            //     else
-            //     {
-            //         BlackKing.IsInCheck = false;
-            //     }
-            // }
-            
-            if (Input.GetKey(KeyCode.Space))
-            {
-                // Node node = new Node(Pieces, IsWhiteTurn, IsWhiteTurn);
-                
-                // Debug.Log(" Children Node : " + node.Children().Count);
-                // Debug.Log("Heuristic Update : " + node.HeursticValue());
-                // Debug.Log("Bonus Update : " + HeuristicHandler.Instance._globalBonus);
-            }
 
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
@@ -106,10 +67,10 @@ namespace Chess
                 Node bestNode = null;
 
                 var children = node.Children();
-                // Debug.Log(" Children Node : " + children.Count);
                 
                 foreach (Node child in children)
                 {
+                    // In Check et In CheckMate
                     // var value = _aiHandler.MinMax(child, _depth - 1 , false);
                     // Debug.Log("Children with heuristic : " + value);
                     // Rules.FindKing(child.Pieces,IsWhiteTurn);
@@ -169,39 +130,8 @@ namespace Chess
         [ContextMenu("Setup Board")]
         public void SetupBoard()
         {
-            Pieces = new Piece[,]
-            {
-                { null, null, null, null, null, null, null, null },
-                { null, null, null, null, null, null, null, null },
-                { null, null, null, null, null, null, null, null },
-                { null, null, null, null, null, null, null, null },
-                { null, WhiteBishop, null, null, null, null, null, null },
-                { WhiteKnight, WhiteKnight, null, null, null, null, null, null },
-                { BlackPawn, BlackKing, null, WhiteKing, null, null, null, null },
-                { null, null, null, null, null, null, null, null },
-            };
-            // Pieces = new Piece[,]
-            // {
-            //     { BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, BlackRook },
-            //     { BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn },
-            //     { null, null, null, null, null, null, null, null },
-            //     { null, null, null, null, null, null, null, null },
-            //     { null, null, null, null, null, null, null, null },
-            //     { null, null, null, null, null, null, null, null },
-            //     { WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn },
-            //     { WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook },
-            // };
-            // Pieces = new Piece[,]
-            // {
-            //     { null, null, null, null, null, null, null, null },
-            //     { WhiteRook, null, WhitePawn, null, null, null, null, null },
-            //     { null, null, null, null, null, WhiteKing, null, null },
-            //     { null, null, null, null, null, null, null, null },
-            //     { null, null, null, null, null, null, null, WhitePawn },
-            //     { BlackPawn, null, null, null, null, null, null, null },
-            //     { null, BlackKing, null, null, null, BlackPawn, null, null },
-            //     { null, null, null, null, WhiteRook, null, null, null },
-            // };
+            Pieces = BoardList.BoardSelector(_chooseBoard);
+            
             IsWhiteTurn = IsWhiteStartTurn;
             DestroyMatrix();
             DisplayMatrix();
@@ -234,7 +164,6 @@ namespace Chess
         }
         public void EndTurn()
         {
-            // Rules.PromotePawn(Pieces,IsWhiteTurn,WhiteQueen, BlackQueen);
             DestroyMatrix();
             DisplayMatrix(); 
             IsWhiteTurn = !IsWhiteTurn;

@@ -78,7 +78,6 @@ namespace Chess
             _isFirtClick = false;
             _oldPosition = position;
             GameManager.Instance.ClickPiece = _piece; 
-            // Debug.Log("ancienne position : " + _oldPosition);
         }
         
         public void PositionBody(Vector2Int recuperationposition)
