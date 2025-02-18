@@ -154,30 +154,23 @@ namespace MinMax.Heuristic
             
                     if (piece != null)
                     {
-                        if (piece.isWhite && positionBonus.ContainsKey(piece))
+                        //if (piece.isWhite && positionBonus.ContainsKey(piece))
+                        //{
+                          //  _positionBonusWhite += positionBonus[piece][i,j];
+                        //}
+                        //else if (!piece.isWhite && positionBonus.ContainsKey(piece))
+                        //{
+                         //   _positionBonusBlack += positionBonus[piece][i,j];
+                        //}
+                        
+                        if (piece.isWhite)
                         {
-                            _positionBonusWhite += positionBonus[piece][i,j];
+                            _whitePoints += piece.Value;
                         }
-                        else if (!piece.isWhite && positionBonus.ContainsKey(piece))
-                        {
-                            _positionBonusBlack += positionBonus[piece][i,j];
+                        else 
+                        { 
+                            _blackPoints += piece.Value;
                         }
-                    }
-                }
-            }
-            
-           
-            foreach (Piece piece in pieces)
-            {
-                if (piece != null)
-                {
-                    if (piece.isWhite)
-                    {
-                        _whitePoints += piece.Value;
-                    }
-                    else 
-                    { 
-                        _blackPoints += piece.Value;
                     }
                 }
             }
