@@ -146,22 +146,22 @@ namespace MinMax.Heuristic
             _positionBonusWhite = 0;
             _positionBonusBlack = 0;
 
-            for (int i = 0; i < GameManager.Instance.Pieces.GetLength(0); i++)
+            for (int i = 0; i < pieces.GetLength(0); i++)
             {
-                for (int j = 0; j < GameManager.Instance.Pieces.GetLength(1); j++)
+                for (int j = 0; j < pieces.GetLength(1); j++)
                 {
-                    Piece piece = GameManager.Instance.Pieces[i, j];
+                    Piece piece = pieces[i, j];
             
                     if (piece != null)
                     {
-                        //if (piece.isWhite && positionBonus.ContainsKey(piece))
-                        //{
-                          //  _positionBonusWhite += positionBonus[piece][i,j];
-                        //}
-                        //else if (!piece.isWhite && positionBonus.ContainsKey(piece))
-                        //{
-                         //   _positionBonusBlack += positionBonus[piece][i,j];
-                        //}
+                        if (piece.isWhite && positionBonus.ContainsKey(piece))
+                        {
+                            _positionBonusWhite += positionBonus[piece][i,j];
+                        }
+                        else if (!piece.isWhite && positionBonus.ContainsKey(piece))
+                        {
+                            _positionBonusBlack += positionBonus[piece][i,j];
+                        }
                         
                         if (piece.isWhite)
                         {
