@@ -175,7 +175,6 @@ namespace MinMax.Heuristic
                 }
             }
             
-            Rules.FindKing(pieces, isWhite);
             if (Rules.IsKingInCheck(pieces, isWhite))
             {
                 if (isWhite == true)

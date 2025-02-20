@@ -10,7 +10,7 @@ namespace MinMax
         private static Piece _king;
         private static Vector2Int _kingPosition;
 
-        public static void FindKing(Piece[,] pieces, bool isWhite)
+        public static Vector2Int FindKing(Piece[,] pieces, bool isWhite)
         {
             for (int i = 0; i < pieces.GetLength(0); i++)
             {
@@ -19,15 +19,17 @@ namespace MinMax
                     Piece piece = pieces[i, j];
                     if (piece is King && piece.isWhite == isWhite)
                     {
-                        _kingPosition = new Vector2Int(i, j);
-                        _king = piece;
-                        break;
+                        return new Vector2Int(i, j);
                     }
                 }
             }
+
+            return new Vector2Int(-1, -1);
         }
         public static bool IsKingInCheck(Piece[,] pieces, bool isWhite)
         {
+            Vector2Int kingPosition = FindKing(pieces, isWhite);
+            
             for (int i = 0; i < pieces.GetLength(0); i++)
             {
                 for (int j = 0; j < pieces.GetLength(1); j++)
@@ -38,7 +40,7 @@ namespace MinMax
                     {
                         Vector2Int position = new Vector2Int(i, j);
                         List<Vector2Int> possibleMoves = piece.availableMovements(position, pieces);
-                        if (possibleMoves.Contains(_kingPosition))
+                        if (possibleMoves.Contains(kingPosition))
                         { 
                             return true;
                         }
@@ -55,26 +57,58 @@ namespace MinMax
             {
                 return false;
             }
+
+            Vector2Int kingPosition = FindKing(pieces, isWhite);
+            Piece king = pieces[kingPosition.x, kingPosition.y];
             
-            List<Vector2Int> kingMoves = _king.availableMovements(_kingPosition, pieces);
+            List<Vector2Int> kingMoves = king.availableMovements(_kingPosition, pieces);
             foreach (var move in kingMoves)
             {
                 Piece temp = pieces[move.x, move.y];
                 pieces[_kingPosition.x, _kingPosition.y] = null;
-                pieces[move.x, move.y] =_king;
+                pieces[move.x, move.y] = king;
                 _kingPosition = move;
 
                 bool stillInCheck = IsKingInCheck(pieces, isWhite);
                 
                 pieces[move.x, move.y] = temp;
-                pieces[_kingPosition.x, _kingPosition.y] = _king;
-                _kingPosition = new Vector2Int(_kingPosition.x, _kingPosition.y);
+                pieces[_kingPosition.x, _kingPosition.y] = king;
 
                 if (!stillInCheck)
                 {
                     return false;
                 }
+                
             }
+            for (int i = 0; i < pieces.GetLength(0); i++)
+            {
+                for (int j = 0; j < pieces.GetLength(1); j++)
+                {
+                    Piece piece = pieces[i, j];
+                    if (piece != null && piece.isWhite == isWhite && !(piece is King))
+                    {
+                        List<Vector2Int> possibleMoves = piece.availableMovements(new Vector2Int(i, j), pieces);
+                        foreach (var move in possibleMoves)
+                        {
+                            Piece temp = pieces[move.x, move.y];
+                            
+                            pieces[i, j] = null;
+                            pieces[move.x, move.y] = piece;
+
+                            bool stillInCheck = IsKingInCheck(pieces, isWhite);
+                            
+                            pieces[move.x, move.y] = temp;
+                            pieces[i, j] = piece;
+
+                            if (!stillInCheck)
+                            {
+                                return false; // Une pièce peut protéger le roi
+                            }
+                        }
+                    }
+                }
+            }
+            
             return true;
         }
 

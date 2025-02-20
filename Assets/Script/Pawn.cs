@@ -11,12 +11,10 @@
              List<Vector2Int> mouvements = new List<Vector2Int>();
              Vector2Int[] blackPawnFirstMoove = new Vector2Int[]
              {
-                 new Vector2Int(1,0),
                  new Vector2Int(2,0)
              };
              Vector2Int[] whitePawnFirstMoove = new Vector2Int[]
              {
-                 new Vector2Int(-1,0),
                  new Vector2Int(-2,0)
              };
              Vector2Int[] blackPawnMoove = new Vector2Int[]
@@ -41,7 +39,8 @@
              {
                  if (position.x == 1)
                  {
-                     foreach (Vector2Int firstFrontB in blackPawnFirstMoove)
+                     bool check = false;
+                     foreach (Vector2Int firstFrontB in blackPawnMoove)
                      {
                          Vector2Int firstFrontBlack = position + firstFrontB;
                          if (IsValidPosition(firstFrontBlack))
@@ -49,7 +48,24 @@
                              Piece pieceAtFirstFrontBlack = pieces[firstFrontBlack.x, firstFrontBlack.y];
                              if (pieceAtFirstFrontBlack == null)
                              {
+                                 check = true;
                                  mouvements.Add(firstFrontBlack);
+                             }
+                         }
+                     }
+
+                     if (check == true)
+                     {
+                         foreach (Vector2Int firstFrontB in blackPawnFirstMoove)
+                         {
+                             Vector2Int firstFrontBlack = position + firstFrontB;
+                             if (IsValidPosition(firstFrontBlack))
+                             {
+                                 Piece pieceAtFirstFrontBlack = pieces[firstFrontBlack.x, firstFrontBlack.y];
+                                 if (pieceAtFirstFrontBlack == null)
+                                 {
+                                     mouvements.Add(firstFrontBlack);
+                                 }
                              }
                          }
                      }
@@ -97,18 +113,37 @@
              {
                  if (position.x == 6)
                  {
-                     foreach (Vector2Int firstFrontW in whitePawnFirstMoove)
+                     bool check = false;
+                     foreach (Vector2Int frontW in whitePawnMoove)
                      {
-                         Vector2Int firstFrontWhite = position + firstFrontW;
-                         if (IsValidPosition(firstFrontWhite))
+                         Vector2Int frontWhite = position + frontW;
+                         if (IsValidPosition(frontWhite))
                          {
-                             Piece pieceAtFirstFrontBlack = pieces[firstFrontWhite.x, firstFrontWhite.y];
+                             Piece pieceAtFirstFrontBlack = pieces[frontWhite.x, frontWhite.y];
                              if (pieceAtFirstFrontBlack == null)
                              {
-                                 mouvements.Add(firstFrontWhite);
+                                 check = true;
+                                 mouvements.Add(frontWhite);
                              }
                          }
                      }
+
+                     if (check == true)
+                     {
+                         foreach (Vector2Int firstFrontW in whitePawnFirstMoove)
+                         {
+                             Vector2Int firstFrontWhite = position + firstFrontW;
+                             if (IsValidPosition(firstFrontWhite))
+                             {
+                                 Piece pieceAtFirstFrontBlack = pieces[firstFrontWhite.x, firstFrontWhite.y];
+                                 if (pieceAtFirstFrontBlack == null)
+                                 {
+                                     mouvements.Add(firstFrontWhite);
+                                 }
+                             }
+                         }
+                     }
+                     
                      foreach (Vector2Int eat in whitePawnEat)
                      {
                          Vector2Int diagonalRight = position + eat;
