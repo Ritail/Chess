@@ -174,33 +174,51 @@ namespace MinMax.Heuristic
                     }
                 }
             }
+            
+            Rules.FindKing(pieces, isWhite);
+            if (Rules.IsKingInCheck(pieces, isWhite))
+            {
+                if (isWhite == true)
+                {
+                    GameManager.Instance.WhiteKing.IsInCheck = true;
+                    _whitePoints -= 10000;
+                    if (Rules.IsCheckMate(pieces, isWhite))
+                    {
+                        GameManager.Instance.WhiteKing.IsCheckMate = true;
+                        _whitePoints -= 100000;
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.BlackKing.IsInCheck = true;
+                    _blackPoints -= 10000;
+                    if (Rules.IsCheckMate(pieces, isWhite))
+                    {
+                        GameManager.Instance.BlackKing.IsCheckMate = true;
+                        _whitePoints -= 100000;
+                    }
+                }
+            }
+            else
+            {
+                if (isWhite == true)
+                {
+                    GameManager.Instance.WhiteKing.IsInCheck = false;
+                    GameManager.Instance.WhiteKing.IsCheckMate = false;
+                }
+                else
+                {
+                    GameManager.Instance.BlackKing.IsInCheck = false;
+                    GameManager.Instance.BlackKing.IsCheckMate = false;
+                }
+            }
 
             if (isWhiteCheck)
             {
-                // if (_gameManager.WhiteKing.IsDestroyed())
-                // {
-                //     _whitePoints -= 100000;
-                //     
-                // }
-                // else if (_gameManager.BlackKing.IsDestroyed())
-                // {
-                //     _whitePoints += 100000;
-                //     
-                // }
-                // _globalBonus = _positionBonusWhite - _positionBonusBlack;
                 _globalPoints = _whitePoints - _blackPoints + _positionBonusWhite - _positionBonusBlack;
             }
             else
             {
-                // if (_gameManager.WhiteKing.IsDestroyed())
-                // {
-                //     _blackPoints += 100000;
-                // }
-                // else if (_gameManager.BlackKing.IsDestroyed())
-                // {
-                //     _blackPoints -= 100000;
-                // }
-                // _globalBonus = _positionBonusBlack - _positionBonusWhite;
                 _globalPoints = _blackPoints - _whitePoints + _positionBonusBlack - _positionBonusWhite;
             }
             

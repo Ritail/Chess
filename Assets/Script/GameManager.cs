@@ -59,7 +59,6 @@ namespace Chess
         
         private void Update()
         {
-
             if (Input.GetKeyUp(KeyCode.Mouse0))
             {
                 Node node = new Node(Pieces, IsWhiteTurn, IsWhiteTurn);
@@ -117,7 +116,20 @@ namespace Chess
                         bestNode = child;
                     }
                 }
-
+                if (WhiteKing.IsInCheck)
+                {
+                    Debug.Log("WhiteKing in check");
+                }else if (BlackKing.IsInCheck)
+                {
+                    Debug.Log("BlackKing in check");
+                }
+                if (WhiteKing.IsCheckMate)
+                {
+                    Debug.Log("Black Win");
+                }else if (BlackKing.IsCheckMate)
+                {
+                    Debug.Log("White Win");
+                }
                 if (bestNode != null)
                 {
                     Pieces = bestNode.Pieces;

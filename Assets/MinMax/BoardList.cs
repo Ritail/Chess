@@ -46,14 +46,14 @@ namespace MinMax
                 case BoardType.BaseBoard:
                     return new Piece[,]
                     {
-                        { GameManager.Instance.BlackRook, GameManager.Instance.BlackKnight, GameManager.Instance.BlackBishop, GameManager.Instance.BlackQueen, GameManager.Instance.BlackKing, GameManager.Instance.BlackBishop, GameManager.Instance.BlackKnight, GameManager.Instance.BlackRook },
+                        { GameManager.Instance.BlackRook, GameManager.Instance.BlackKnight, GameManager.Instance.BlackBishop,GameManager.Instance.BlackKing, GameManager.Instance.BlackQueen, GameManager.Instance.BlackBishop, GameManager.Instance.BlackKnight, GameManager.Instance.BlackRook },
                         { GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn,GameManager.Instance.BlackPawn },
                         { null, null, null, null, null, null, null, null },
                         { null, null, null, null, null, null, null, null },
                         { null, null, null, null, null, null, null, null },
                         { null, null, null, null, null, null, null, null },
                         { GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn },
-                        { GameManager.Instance.WhiteRook, GameManager.Instance.WhiteKnight, GameManager.Instance.WhiteBishop, GameManager.Instance.WhiteQueen, GameManager.Instance.WhiteKing, GameManager.Instance.WhiteBishop, GameManager.Instance.WhiteKnight, GameManager.Instance.WhiteRook },
+                        { GameManager.Instance.WhiteRook, GameManager.Instance.WhiteKnight, GameManager.Instance.WhiteBishop,GameManager.Instance.WhiteKing ,GameManager.Instance.WhiteQueen, GameManager.Instance.WhiteBishop, GameManager.Instance.WhiteKnight, GameManager.Instance.WhiteRook },
                     };
             
                 default:
