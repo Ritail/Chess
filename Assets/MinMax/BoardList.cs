@@ -10,6 +10,7 @@ namespace MinMax
         ThirdCheckBoard,
         StopPawnBoard,
         PawnBoard,
+        BugBoard,
     }
     
     public static class BoardList
@@ -67,6 +68,18 @@ namespace MinMax
                         { null, null, null, null, null, null, null, null },
                         { GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn },
                         { null, null, null,null ,null, null, null, null },
+                    };
+                case BoardType.BugBoard:
+                    return new Piece[,]
+                    {
+                        { GameManager.Instance.BlackRook, null, GameManager.Instance.BlackBishop,GameManager.Instance.BlackKing, GameManager.Instance.BlackQueen, null, null, GameManager.Instance.BlackRook },
+                        { GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn, GameManager.Instance.BlackPawn, null, GameManager.Instance.BlackKnight, null, null,GameManager.Instance.BlackPawn },
+                        { null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, GameManager.Instance.BlackPawn, GameManager.Instance.WhiteBishop, null },
+                        { null, null, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn, null, null, null },
+                        { null, GameManager.Instance.WhitePawn, null, null, null, GameManager.Instance.WhitePawn, null, null },
+                        { GameManager.Instance.WhitePawn, null, null, null, null, GameManager.Instance.WhiteQueen, GameManager.Instance.WhitePawn, GameManager.Instance.WhitePawn },
+                        { GameManager.Instance.WhiteRook, null, null,GameManager.Instance.WhiteKing ,null, GameManager.Instance.WhiteBishop, null, GameManager.Instance.WhiteRook },
                     };
             
                 default:
