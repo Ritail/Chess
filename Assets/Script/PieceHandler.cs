@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Image = UnityEngine.UI.Image;
@@ -19,8 +20,8 @@ namespace Chess
         [SerializeField] private GameObject _indicateurMouvement;
         
         private void Awake()
-        {
-                _image = GetComponent<Image>();
+        { 
+            _image = GetComponent<Image>();
         }
 
         public void Body(Piece piece, Vector2Int position)

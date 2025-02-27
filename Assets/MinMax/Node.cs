@@ -65,8 +65,8 @@ public class Node
 
     public Piece[,] MovePiece(Piece[,] pieces, Piece piece, Vector2Int from, Vector2Int to)
     {
-        Pieces[from.x, from.y] = null;
-        Pieces[to.x, to.y] = piece;
+        pieces[to.x, to.y] = piece;
+        pieces[from.x, from.y] = null;
         return pieces;
     }
 }

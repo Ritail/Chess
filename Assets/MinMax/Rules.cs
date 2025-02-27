@@ -29,7 +29,6 @@ namespace MinMax
         public static bool IsKingInCheck(Piece[,] pieces, bool isWhite)
         {
             Vector2Int kingPosition = FindKing(pieces, isWhite);
-            
             for (int i = 0; i < pieces.GetLength(0); i++)
             {
                 for (int j = 0; j < pieces.GetLength(1); j++)
@@ -61,18 +60,18 @@ namespace MinMax
             Vector2Int kingPosition = FindKing(pieces, isWhite);
             Piece king = pieces[kingPosition.x, kingPosition.y];
             
-            List<Vector2Int> kingMoves = king.availableMovements(_kingPosition, pieces);
+            List<Vector2Int> kingMoves = king.availableMovements(kingPosition, pieces);
             foreach (var move in kingMoves)
             {
                 Piece temp = pieces[move.x, move.y];
-                pieces[_kingPosition.x, _kingPosition.y] = null;
+                pieces[kingPosition.x, kingPosition.y] = null;
                 pieces[move.x, move.y] = king;
-                _kingPosition = move;
+                kingPosition = move;
 
                 bool stillInCheck = IsKingInCheck(pieces, isWhite);
                 
                 pieces[move.x, move.y] = temp;
-                pieces[_kingPosition.x, _kingPosition.y] = king;
+                pieces[kingPosition.x, kingPosition.y] = king;
 
                 if (!stillInCheck)
                 {
