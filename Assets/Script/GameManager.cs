@@ -65,57 +65,26 @@ namespace Chess
                 int maxValue = int.MinValue;
                 Node bestNode = null;
 
-                var children = node.Children();
+                int a = int.MinValue;
+                int b = int.MaxValue;
                 
-                foreach (Node child in children)
+
+                var children = node.Children();
+
+                for (var index = 0; index < children.Count; index++)
                 {
-                    // In Check et In CheckMate
-                    // var value = _aiHandler.MinMax(child, _depth - 1 , false);
-                    // Debug.Log("Children with heuristic : " + value);
-                    // Rules.FindKing(child.Pieces,IsWhiteTurn);
-                    // if (Rules.IsKingInCheck(child.Pieces, IsWhiteTurn))
-                    // {
-                    //     if (IsWhiteTurn) 
-                    //     {
-                    //         WhiteKing.IsInCheck = true;
-                    //         Debug.Log("White King in Check");
-                    //         if (Rules.IsCheckMate(Pieces, IsWhiteTurn))
-                    //         {
-                    //             WhiteKing.IsCheckMate = true;
-                    //             Debug.Log("White King in CheckMate");
-                    //         }
-                    //     }
-                    //     else
-                    //     {
-                    //         BlackKing.IsInCheck = true;
-                    //         Debug.Log("Black King in Check");
-                    //         if (Rules.IsCheckMate(Pieces, IsWhiteTurn))
-                    //         {
-                    //             BlackKing.IsCheckMate = true;
-                    //             Debug.Log("Black King in CheckMate");
-                    //         } 
-                    //     }
-                    // }
-                    // else
-                    // {
-                    //     if (IsWhiteTurn)
-                    //     {
-                    //         WhiteKing.IsInCheck = false;
-                    //         Debug.Log("White King not Check");
-                    //     }
-                    //     else
-                    //     {
-                    //         BlackKing.IsInCheck = false;
-                    //         Debug.Log("Black King not Check");
-                    //     }
-                    // }
-                    var value = _aiHandler.MinMax(child, _depth - 1 , false);
+                    var child = children[index];
+                    
+                    // CustomDebug.Start = index == 28;
+                    // var value = _aiHandler.MinMax(child, _depth - 1, false);
+                    var value = _aiHandler.AlphaBetaMinMax(child, _depth - 1, a, b, false);
                     if (value > maxValue)
                     {
                         maxValue = value;
                         bestNode = child;
                     }
                 }
+
                 if (WhiteKing.IsInCheck)
                 {
                     Debug.Log("WhiteKing in check");
@@ -190,6 +159,3 @@ namespace Chess
         }
     }
 }
-
-
-

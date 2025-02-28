@@ -3,6 +3,7 @@ using System.Data;
 using Chess;
 using MinMax;
 using MinMax.Heuristic;
+using Script;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -52,6 +53,7 @@ public class Node
 
                     foreach (var move in possibleMove)
                     {
+                        // if (CustomDebug.Start) Debug.Log("Move from position: " + move + " to position: " + position + " with " + piece.name);
                         Node node = new Node(Pieces, !IsWhiteTurn, IsWhiteCheck);
                         node.MovePiece(node.Pieces, piece, new Vector2Int(x, y), move);
                         Rules.PromotePawn(node.Pieces, IsWhiteTurn, GameManager.Instance.WhiteQueen, GameManager.Instance.BlackQueen);

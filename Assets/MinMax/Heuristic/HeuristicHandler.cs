@@ -197,42 +197,42 @@ namespace MinMax.Heuristic
                 }
             }
             
-            // if (Rules.IsKingInCheck(pieces, isWhite))
-            // {
-            //     if (isWhite)
-            //     {
-            //         GameManager.Instance.WhiteKing.IsInCheck = true;
-            //         _whitePoints -= 50000;
-            //         if (Rules.IsCheckMate(pieces, isWhite))
-            //         {
-            //             GameManager.Instance.WhiteKing.IsCheckMate = true;
-            //             _whitePoints -= 100000;
-            //         }
-            //     }
-            //     else
-            //     {
-            //         GameManager.Instance.BlackKing.IsInCheck = true;
-            //         _blackPoints -= 50000;
-            //         if (Rules.IsCheckMate(pieces, isWhite))
-            //         {
-            //             GameManager.Instance.BlackKing.IsCheckMate = true;
-            //             _whitePoints -= 100000;
-            //         }
-            //     }
-            // }
-            // else
-            // {
-            //     if (isWhite == true)
-            //     {
-            //         GameManager.Instance.WhiteKing.IsInCheck = false;
-            //         GameManager.Instance.WhiteKing.IsCheckMate = false;
-            //     }
-            //     else
-            //     {
-            //         GameManager.Instance.BlackKing.IsInCheck = false;
-            //         GameManager.Instance.BlackKing.IsCheckMate = false;
-            //     }
-            // }
+            if (Rules.IsKingInCheck(pieces, !isWhite))
+            {
+                if (isWhiteCheck)
+                {
+                    GameManager.Instance.BlackKing.IsInCheck = true;
+                    _whitePoints += 50000;
+                    if (Rules.IsCheckMate(pieces, !isWhite))
+                    {
+                        GameManager.Instance.BlackKing.IsCheckMate = true;
+                        _whitePoints += 100000;
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.WhiteKing.IsInCheck = true;
+                    _blackPoints += 50000;
+                    if (Rules.IsCheckMate(pieces, isWhite))
+                    {
+                        GameManager.Instance.WhiteKing.IsCheckMate = true;
+                        _whitePoints += 100000;
+                    }
+                }
+            }
+            else
+            {
+                if (isWhite == true)
+                {
+                    GameManager.Instance.WhiteKing.IsInCheck = false;
+                    GameManager.Instance.WhiteKing.IsCheckMate = false;
+                }
+                else
+                {
+                    GameManager.Instance.BlackKing.IsInCheck = false;
+                    GameManager.Instance.BlackKing.IsCheckMate = false;
+                }
+            }
 
             if (isWhiteCheck)
             {
