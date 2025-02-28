@@ -73,8 +73,7 @@ namespace Chess
 
                 for (var index = 0; index < children.Count; index++)
                 {
-                    var child = children[index];
-                    
+                    var child = children[index];  
                     // CustomDebug.Start = index == 28;
                     // var value = _aiHandler.MinMax(child, _depth - 1, false);
                     var value = _aiHandler.AlphaBetaMinMax(child, _depth - 1, a, b, false);

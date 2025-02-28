@@ -199,7 +199,7 @@ namespace MinMax.Heuristic
             
             if (Rules.IsKingInCheck(pieces, !isWhite))
             {
-                if (isWhiteCheck)
+                if (isWhite)
                 {
                     GameManager.Instance.BlackKing.IsInCheck = true;
                     _whitePoints += 50000;
@@ -213,10 +213,10 @@ namespace MinMax.Heuristic
                 {
                     GameManager.Instance.WhiteKing.IsInCheck = true;
                     _blackPoints += 50000;
-                    if (Rules.IsCheckMate(pieces, isWhite))
+                    if (Rules.IsCheckMate(pieces, !isWhite))
                     {
                         GameManager.Instance.WhiteKing.IsCheckMate = true;
-                        _whitePoints += 100000;
+                        _blackPoints += 100000;
                     }
                 }
             }

@@ -101,7 +101,7 @@ namespace MinMax
 
                             if (!stillInCheck)
                             {
-                                return false; // Une pièce peut protéger le roi
+                                return false; 
                             }
                         }
                     }
